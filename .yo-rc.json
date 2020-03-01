@@ -1,0 +1,40 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.ms.learnapp"
+    },
+    "jhipsterVersion": "6.6.0",
+    "applicationType": "monolith",
+    "baseName": "LearnApp",
+    "packageName": "com.ms.learnapp",
+    "packageFolder": "com/ms/learnapp",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "OGZmZDM4ZWJhOWViNjA2OGI2NGY4OTFkYmIxODU3MTc0ZjBkZjc0MWUzOTRhNzg4NTU4MTI5MGU4ZmRkMDQyN2ZkYTUwMGExZDU3OTg3YTVlYzQ3OTJlNjllNzg5NDViYzExNDlhZGY1MTFmNmU3MGUwN2I1OGZmMDMyZDk4NDg=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "spacelab",
+    "clientThemeVariant": "dark",
+    "creationTimestamp": 1581760591850,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": []
+  }
+}
