@@ -4,8 +4,9 @@ export interface ISkill {
   id?: string;
   name?: string;
   skillType?: SkillTypeValues;
+  skillAliases?: string[];
 }
 
 export class Skill implements ISkill {
-  constructor(public id?: string, public name?: string, public skillType?: SkillTypeValues) {}
+  constructor(public id?: string, public name?: string, public skillType?: SkillTypeValues, public skillAliases?: string[]) {}
 }

@@ -10,23 +10,37 @@ import { SkillService } from './skill.service';
 
 @Component({
   selector: 'jhi-skill-update',
-  templateUrl: './skill-update.component.html'
+  templateUrl: './skill-update.component.html',
+  styleUrls: ['./skill.component.scss']
 })
 export class SkillUpdateComponent implements OnInit {
   isSaving = false;
+  skillAliases: string[] = [];
 
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
-    skillType: [null, [Validators.required]]
+    skillType: [null, [Validators.required]],
+    newAlias: []
   });
 
   constructor(protected skillService: SkillService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ skill }) => {
+      this.skillAliases = skill.skillAliases;
       this.updateForm(skill);
     });
+  }
+
+  addAlias(): void {
+    this.skillAliases = this.skillAliases || [];
+    this.skillAliases.push(this.editForm.get(['newAlias'])!.value);
+    this.editForm.controls['newAlias'].reset();
+  }
+
+  deleteAlias(index: number): void {
+    this.skillAliases.splice(index, 1);
   }
 
   updateForm(skill: ISkill): void {
@@ -56,7 +70,8 @@ export class SkillUpdateComponent implements OnInit {
       ...new Skill(),
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
-      skillType: this.editForm.get(['skillType'])!.value
+      skillType: this.editForm.get(['skillType'])!.value,
+      skillAliases: this.skillAliases
     };
   }
 

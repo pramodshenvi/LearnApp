@@ -24,6 +24,7 @@
                 <tr>
                     <th scope="col" ><span>Name</span></th>
                     <th scope="col" ><span>Skill Type</span></th>
+                    <th scope="col" ><span>Skill Aliases</span></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -31,6 +32,7 @@
                 <tr *ngFor="let skill of skills ;trackBy: trackId">
                     <td><a [routerLink]="['/skill', skill.id, 'view']">{{ skill.name }}</a></td>
                     <td>{{ skill.skillType }}</td>
+                    <td>{{ skill.skillAliases }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

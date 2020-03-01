@@ -2,6 +2,7 @@ package com.ms.learnapp.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import com.ms.learnapp.domain.enumeration.SkillTypeValues;
 
@@ -18,6 +19,7 @@ public class SkillDTO implements Serializable {
     @NotNull
     private SkillTypeValues skillType;
 
+    private List<String> skillAliases;
 
     public String getId() {
         return id;
@@ -71,5 +73,13 @@ public class SkillDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", skillType='" + getSkillType() + "'" +
             "}";
+    }
+
+    public List<String> getSkillAliases() {
+        return skillAliases;
+    }
+
+    public void setSkillAliases(List<String> skillAliases) {
+        this.skillAliases = skillAliases;
     }
 }

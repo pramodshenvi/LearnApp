@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.ms.learnapp.domain.enumeration.SkillTypeValues;
 
@@ -27,6 +28,9 @@ public class Skill implements Serializable {
     @NotNull
     @Field("skill_type")
     private SkillTypeValues skillType;
+
+    @Field("skill_aliases")
+    private List<String> skillAliases;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public String getId() {
@@ -87,5 +91,13 @@ public class Skill implements Serializable {
             ", name='" + getName() + "'" +
             ", skillType='" + getSkillType() + "'" +
             "}";
+    }
+
+    public List<String> getSkillAliases() {
+        return skillAliases;
+    }
+
+    public void setSkillAliases(List<String> skillAliases) {
+        this.skillAliases = skillAliases;
     }
 }
