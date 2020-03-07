@@ -1,0 +1,7 @@
+<div *ngIf="dropdownList && dropdownList.length > 0" class="dropDownContainer">
+    <ul>
+        <li *ngFor="let item of dropdownList; let i=index" (click)="sendSelectedValueToParent(item.name)" [ngClass]="{'focus' : i === selectionPosition}">
+            {{item.name}}
+        </li>
+    </ul>
+</div>

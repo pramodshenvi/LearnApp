@@ -6,7 +6,9 @@ import com.ms.learnapp.service.dto.SkillDTO;
 import com.ms.learnapp.service.mapper.SkillMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -54,6 +56,15 @@ public class SkillService {
         return skillRepository.findAll().stream()
             .map(skillMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public List<SkillDTO> findAllForCriteria(SkillDTO s) {
+        log.debug("Request to get all skills that match the criteria: "+s.toString());
+        ExampleMatcher m = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING);
+        return skillRepository.findAll(Example.of(skillMapper.toEntity(s),m))
+        .stream()
+        .map(skillMapper::toDto)
+        .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

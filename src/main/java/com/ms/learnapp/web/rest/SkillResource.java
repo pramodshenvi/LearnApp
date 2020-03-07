@@ -1,5 +1,6 @@
 package com.ms.learnapp.web.rest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ms.learnapp.service.SkillService;
 import com.ms.learnapp.web.rest.errors.BadRequestAlertException;
 import com.ms.learnapp.service.dto.SkillDTO;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -84,9 +86,13 @@ public class SkillResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of skills in body.
      */
     @GetMapping("/skills")
-    public List<SkillDTO> getAllSkills() {
+    public List<SkillDTO> getAllSkills(@RequestParam Map<String,String> allRequestParams) {
         log.debug("REST request to get all Skills");
-        return skillService.findAll();
+        if(allRequestParams == null || allRequestParams.size() == 0)
+            return skillService.findAll();
+        else {
+            return skillService.findAllForCriteria(new ObjectMapper().convertValue(allRequestParams, SkillDTO.class));
+        }
     }
 
     /**

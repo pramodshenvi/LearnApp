@@ -26,13 +26,16 @@
                 <div class="form-group">
                     <label class="form-control-label" for="field_smeSkills">SME Skills</label>
                     <input type="text" class="form-control" name="smeSkills" id="field_smeSkills"
-                           formControlName="newSMESkill" (keyup.enter)="addSMESkill()"/>
-                        <div *ngFor="let skill of smeSkills; let i=index">
+                           formControlName="newSMESkill" (keyup)="loadSkills($event)" autocomplete="off"/>
+                    <jhi-dynamic-dropdown [keyboardAction]=skillDropDownKeyboardAction [dropdownList]=skillsDropdownList (selectedValueEmitter)="onDropdownValueSelection($event);" ></jhi-dynamic-dropdown>
+                    <div *ngIf="smeSkills && smeSkills.length > 0">
+                        <div *ngFor="let skill of smeSkills.reverse(); let i=index">
                             <span class="smeSkillsValue">
                                 <span>{{skill}}</span>&nbsp;&nbsp;&nbsp;
-                                <fa-icon (click)="deleteSMESkill(i)" icon="times"></fa-icon>
+                                <fa-icon (click)="deleteSMESkill(smeSkills.length -i -1)" icon="times"></fa-icon>
                             </span>
                         </div>
+                    </div>
                 </div>
 
                 <div class="form-group">

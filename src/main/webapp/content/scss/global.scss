@@ -164,3 +164,25 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.dropDownContainer ul {
+  padding-left: 0px;
+  position: absolute;
+  z-index: 10;
+  background: #f3f3f3;
+  min-width: 60%;
+}
+
+.dropDownContainer li {
+  list-style: none;
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+}
+
+.dropDownContainer li.focus {
+  background: #e1e1e1;
+}
+
+.dropDownContainer li:hover {
+  background: #e1e1e1;
+}

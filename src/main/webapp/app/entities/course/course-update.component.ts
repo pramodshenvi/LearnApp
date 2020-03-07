@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
 import { ICourse, Course } from 'app/shared/model/course.model';
 import { CourseService } from './course.service';
 
+import { ISkill } from 'app/shared/model/skill.model';
+import { SkillService } from 'app/entities/skill/skill.service';
+
 @Component({
   selector: 'jhi-course-update',
   templateUrl: './course-update.component.html',
@@ -16,6 +19,8 @@ import { CourseService } from './course.service';
 export class CourseUpdateComponent implements OnInit {
   isSaving = false;
   smeSkills: string[] = [];
+  skillsDropdownList: ISkill[] = [];
+  skillDropDownKeyboardAction: String | undefined;
 
   editForm = this.fb.group({
     id: [],
@@ -26,7 +31,7 @@ export class CourseUpdateComponent implements OnInit {
     newSMESkill: []
   });
 
-  constructor(protected courseService: CourseService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(protected courseService: CourseService, protected skillService: SkillService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ course }) => {
@@ -35,14 +40,31 @@ export class CourseUpdateComponent implements OnInit {
     });
   }
 
-  addSMESkill(): void {
-    this.smeSkills = this.smeSkills || [];
-    this.smeSkills.push(this.editForm.get(['newSMESkill'])!.value);
-    this.editForm.controls['newSMESkill'].reset();
-  }
-
   deleteSMESkill(index: number): void {
     this.smeSkills.splice(index, 1);
+  }
+
+  loadSkills(evt:any): void {
+    this.skillDropDownKeyboardAction = evt.key;
+    setTimeout(()=>{
+      this.skillDropDownKeyboardAction = "reset";
+    },200)
+    const skillVal = this.editForm.get(['newSMESkill'])!.value;
+    if (skillVal && skillVal !== "") {
+      if(evt.key !== "Enter" && evt.key !== "ArrowUp"  && evt.key !== "ArrowDown"){
+        this.skillsDropdownList = [];
+        const skill:ISkill = {name:skillVal};
+        this.skillService.query(skill).subscribe((s) => {
+          this.skillsDropdownList = (s.body) ? s.body.slice(0,5) : [];
+        });
+      }
+    }
+  }
+
+  onDropdownValueSelection(selection: string): void {
+    this.smeSkills = this.smeSkills || [];
+    this.smeSkills.push(selection);
+    this.editForm.controls['newSMESkill'].reset();
   }
 
   updateForm(course: ICourse): void {
