@@ -4,6 +4,7 @@ import { AttendanceLocationTypes } from 'app/shared/model/enumerations/attendanc
 
 export interface ISession {
   id?: string;
+  courseId?: string;
   topic?: string;
   agenda?: string;
   sessionDateTime?: Moment;
@@ -16,6 +17,7 @@ export interface ISession {
 export class Session implements ISession {
   constructor(
     public id?: string,
+    public courseId?: string,
     public topic?: string,
     public agenda?: string,
     public sessionDateTime?: Moment,

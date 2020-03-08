@@ -78,5 +78,9 @@ export const courseRoute: Routes = [
       pageTitle: 'Courses'
     },
     canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'session',
+    loadChildren: () => import('app/entities/session/session.module').then(m => m.LearnAppSessionModule)
   }
 ];

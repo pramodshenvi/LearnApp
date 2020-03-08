@@ -30,6 +30,7 @@ describe('Service Tests', () => {
         'ID',
         'AAAAAAA',
         'AAAAAAA',
+        'AAAAAAA',
         currentDate,
         SessionLocation.BANGALORE,
         'AAAAAAA',

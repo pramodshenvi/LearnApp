@@ -24,6 +24,10 @@ public class Session implements Serializable {
     private String id;
 
     @NotNull
+    @Field("courseId")
+    private String courseId;
+
+    @NotNull
     @Field("topic")
     private String topic;
 
@@ -176,5 +180,13 @@ public class Session implements Serializable {
             ", assignedSMEs='" + getAssignedSMEs() + "'" +
             ", attendanceLocation='" + getAttendanceLocation() + "'" +
             "}";
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 }

@@ -9,6 +9,7 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { ISession, Session } from 'app/shared/model/session.model';
 import { SessionService } from './session.service';
+import { MessengerService } from 'app/shared/util/messenger-service';
 
 @Component({
   selector: 'jhi-session-update',
@@ -16,6 +17,7 @@ import { SessionService } from './session.service';
 })
 export class SessionUpdateComponent implements OnInit {
   isSaving = false;
+  courseDetails: any = {};
 
   editForm = this.fb.group({
     id: [],
@@ -28,9 +30,11 @@ export class SessionUpdateComponent implements OnInit {
     attendanceLocation: []
   });
 
-  constructor(protected sessionService: SessionService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(protected sessionService: SessionService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder, protected messengerService: MessengerService) {}
 
   ngOnInit(): void {
+    this.courseDetails = this.messengerService.getCourseDetails();
+
     this.activatedRoute.data.subscribe(({ session }) => {
       if (!session.id) {
         const today = moment().startOf('day');
@@ -40,7 +44,7 @@ export class SessionUpdateComponent implements OnInit {
       this.updateForm(session);
     });
   }
-
+  
   updateForm(session: ISession): void {
     this.editForm.patchValue({
       id: session.id,
@@ -72,6 +76,7 @@ export class SessionUpdateComponent implements OnInit {
     return {
       ...new Session(),
       id: this.editForm.get(['id'])!.value,
+      courseId: this.courseDetails['id'],
       topic: this.editForm.get(['topic'])!.value,
       agenda: this.editForm.get(['agenda'])!.value,
       sessionDateTime: this.editForm.get(['sessionDateTime'])!.value

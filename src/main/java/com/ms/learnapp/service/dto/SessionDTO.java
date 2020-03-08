@@ -15,6 +15,9 @@ public class SessionDTO implements Serializable {
     private String id;
 
     @NotNull
+    private String courseId;
+
+    @NotNull
     private String topic;
 
     @NotNull
@@ -129,5 +132,13 @@ public class SessionDTO implements Serializable {
             ", assignedSMEs='" + getAssignedSMEs() + "'" +
             ", attendanceLocation='" + getAttendanceLocation() + "'" +
             "}";
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 }

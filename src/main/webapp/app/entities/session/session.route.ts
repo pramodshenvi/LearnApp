@@ -7,7 +7,6 @@ import { flatMap } from 'rxjs/operators';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { ISession, Session } from 'app/shared/model/session.model';
 import { SessionService } from './session.service';
-import { SessionComponent } from './session.component';
 import { SessionDetailComponent } from './session-detail.component';
 import { SessionUpdateComponent } from './session-update.component';
 
@@ -34,15 +33,6 @@ export class SessionResolve implements Resolve<ISession> {
 }
 
 export const sessionRoute: Routes = [
-  {
-    path: '',
-    component: SessionComponent,
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'Sessions'
-    },
-    canActivate: [UserRouteAccessService]
-  },
   {
     path: ':id/view',
     component: SessionDetailComponent,
