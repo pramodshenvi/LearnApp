@@ -11,10 +11,11 @@ import { courseRoute } from './course.route';
 
 import { DynamicDropdownComponent } from 'app/shared/util/dynamic-dropdown'
 import { SessionComponent } from 'app/entities/session/session.component';
+import { SessionDeleteDialogComponent } from 'app/entities/session/session-delete-dialog.component';
 
 @NgModule({
   imports: [LearnAppSharedModule, RouterModule.forChild(courseRoute)],
-  declarations: [CourseComponent, SessionComponent, CourseDetailComponent, CourseUpdateComponent, CourseDeleteDialogComponent, DynamicDropdownComponent],
-  entryComponents: [CourseDeleteDialogComponent]
+  declarations: [CourseComponent, SessionComponent, SessionDeleteDialogComponent, CourseDetailComponent, CourseUpdateComponent, CourseDeleteDialogComponent, DynamicDropdownComponent],
+  entryComponents: [CourseDeleteDialogComponent, SessionDeleteDialogComponent]
 })
 export class LearnAppCourseModule {}
