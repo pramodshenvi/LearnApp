@@ -1,0 +1,54 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "topic",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "agenda",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sessionDateTime",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "location",
+            "fieldType": "SessionLocation",
+            "fieldValues": "BANGALORE,MUMBAI,MULTIPLE,CONFERENCE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sessionPreRequisites",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "assignedSMEs",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "attendanceLocation",
+            "fieldType": "AttendanceLocationTypes",
+            "fieldValues": "CLASSROOM,REMOTE"
+        }
+    ],
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceClass",
+    "entityTableName": "session",
+    "databaseType": "mongodb",
+    "readOnly": false,
+    "jpaMetamodelFiltering": false,
+    "pagination": "infinite-scroll"
+}

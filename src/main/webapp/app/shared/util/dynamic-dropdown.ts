@@ -33,7 +33,8 @@ export class DynamicDropdownComponent implements OnInit, OnChanges {
           break;
         }
         case "Enter": {
-          this.sendSelectedValueToParent(this.dropdownList[this.selectionPosition].name);
+          if(this.dropdownList[this.selectionPosition])
+            this.sendSelectedValueToParent(this.dropdownList[this.selectionPosition].name);
           break;
         }
       }

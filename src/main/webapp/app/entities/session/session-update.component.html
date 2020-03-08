@@ -1,0 +1,93 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-session-heading">Create or edit a Session</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_topic">Topic</label>
+                    <input type="text" class="form-control" name="topic" id="field_topic"
+                           formControlName="topic"/>
+                    <div *ngIf="editForm.get('topic')!.invalid && (editForm.get('topic')!.dirty || editForm.get('topic')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('topic')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_agenda">Agenda</label>
+                    <input type="text" class="form-control" name="agenda" id="field_agenda"
+                           formControlName="agenda"/>
+                    <div *ngIf="editForm.get('agenda')!.invalid && (editForm.get('agenda')!.dirty || editForm.get('agenda')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('agenda')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sessionDateTime">Session Date Time</label>
+                    <div class="d-flex">
+                        <input id="field_sessionDateTime" type="datetime-local" class="form-control" name="sessionDateTime" formControlName="sessionDateTime" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_location">Location</label>
+                    <select class="form-control" name="location" formControlName="location" id="field_location">
+                        <option value="BANGALORE">BANGALORE</option>
+                        <option value="MUMBAI">MUMBAI</option>
+                        <option value="MULTIPLE">MULTIPLE</option>
+                        <option value="CONFERENCE">CONFERENCE</option>
+                    </select>
+                    <div *ngIf="editForm.get('location')!.invalid && (editForm.get('location')!.dirty || editForm.get('location')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('location')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sessionPreRequisites">Session Pre Requisites</label>
+                    <input type="text" class="form-control" name="sessionPreRequisites" id="field_sessionPreRequisites"
+                           formControlName="sessionPreRequisites"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_assignedSMEs">Assigned SM Es</label>
+                    <input type="text" class="form-control" name="assignedSMEs" id="field_assignedSMEs"
+                           formControlName="assignedSMEs"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_attendanceLocation">Attendance Location</label>
+                    <select class="form-control" name="attendanceLocation" formControlName="attendanceLocation" id="field_attendanceLocation">
+                        <option value="CLASSROOM">CLASSROOM</option>
+                        <option value="REMOTE">REMOTE</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
