@@ -9,6 +9,7 @@ import { ISession } from 'app/shared/model/session.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { SessionService } from './session.service';
 import { SessionDeleteDialogComponent } from './session-delete-dialog.component';
+import { MessengerService } from 'app/shared/util/messenger-service';
 
 @Component({
   selector: 'jhi-session',
@@ -22,12 +23,14 @@ export class SessionComponent implements OnInit, OnDestroy {
   page: number;
   predicate: string;
   ascending: boolean;
+  courseDetails: any = {};
 
   constructor(
     protected sessionService: SessionService,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    protected parseLinks: JhiParseLinks
+    protected parseLinks: JhiParseLinks,
+    protected messengerService: MessengerService
   ) {
     this.sessions = [];
     this.itemsPerPage = ITEMS_PER_PAGE;
@@ -44,7 +47,8 @@ export class SessionComponent implements OnInit, OnDestroy {
       .query({
         page: this.page,
         size: this.itemsPerPage,
-        sort: this.sort()
+        sort: this.sort(),
+        courseId: this.courseDetails.id
       })
       .subscribe((res: HttpResponse<ISession[]>) => this.paginateSessions(res.body, res.headers));
   }
@@ -61,6 +65,7 @@ export class SessionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.courseDetails = this.messengerService.getCourseDetails();
     this.loadAll();
     this.registerChangeInSessions();
   }

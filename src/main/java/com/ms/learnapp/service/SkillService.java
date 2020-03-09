@@ -51,20 +51,18 @@ public class SkillService {
      *
      * @return the list of entities.
      */
-    public List<SkillDTO> findAll() {
+    public List<SkillDTO> findAll(SkillDTO s) {
         log.debug("Request to get all Skills");
+        if(s != null){
+            ExampleMatcher m = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING);
+            return skillRepository.findAll(Example.of(skillMapper.toEntity(s),m))
+            .stream()
+            .map(skillMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+        }
         return skillRepository.findAll().stream()
             .map(skillMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
-    }
-
-    public List<SkillDTO> findAllForCriteria(SkillDTO s) {
-        log.debug("Request to get all skills that match the criteria: "+s.toString());
-        ExampleMatcher m = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING);
-        return skillRepository.findAll(Example.of(skillMapper.toEntity(s),m))
-        .stream()
-        .map(skillMapper::toDto)
-        .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

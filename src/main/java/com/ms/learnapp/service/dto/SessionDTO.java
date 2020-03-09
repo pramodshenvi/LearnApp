@@ -124,6 +124,7 @@ public class SessionDTO implements Serializable {
     public String toString() {
         return "SessionDTO{" +
             "id=" + getId() +
+            ", courseId='" + getCourseId() + "'" +
             ", topic='" + getTopic() + "'" +
             ", agenda='" + getAgenda() + "'" +
             ", sessionDateTime='" + getSessionDateTime() + "'" +

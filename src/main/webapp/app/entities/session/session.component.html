@@ -15,7 +15,6 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="topic"><span>Topic</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="agenda"><span>Agenda</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="sessionDateTime"><span>Session Date Time</span> <fa-icon icon="sort"></fa-icon></th>
@@ -28,8 +27,7 @@
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let session of sessions ;trackBy: trackId">
-                    <td><a [routerLink]="['/course/session', session.id, 'view']">{{ session.id }}</a></td>
-                    <td>{{ session.topic }}</td>
+                    <td><a [routerLink]="['/course/session', session.id, 'view']">{{ session.topic }}</a></td>
                     <td>{{ session.agenda }}</td>
                     <td>{{ session.sessionDateTime | date:'medium' }}</td>
                     <td>{{ session.location }}</td>

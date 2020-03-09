@@ -91,9 +91,9 @@ public class SessionResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of sessions in body.
      */
     @GetMapping("/sessions")
-    public ResponseEntity<List<SessionDTO>> getAllSessions(Pageable pageable) {
+    public ResponseEntity<List<SessionDTO>> getAllSessions(Pageable pageable, SessionDTO dto) {
         log.debug("REST request to get a page of Sessions");
-        Page<SessionDTO> page = sessionService.findAll(pageable);
+        Page<SessionDTO> page = sessionService.findAll(pageable, dto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
