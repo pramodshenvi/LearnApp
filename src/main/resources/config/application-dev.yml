@@ -25,7 +25,7 @@ spring:
     include:
       - swagger
       # Uncomment to activate TLS for the dev profile
-      #- tls
+      - tls
   devtools:
     restart:
       enabled: true
@@ -40,10 +40,15 @@ spring:
       uri: mongodb+srv://LearnAppUser:lau2020@learnapp-t8scd.mongodb.net/test?retryWrites=true&w=majority
       database: LearnApp
   mail:
-    host: localhost
-    port: 25
-    username:
-    password:
+    host: smtp.gmail.com
+    port: 587
+    username: learnapp.ms@gmail.com
+    password: learnapp_password
+    protocol: smtp
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
