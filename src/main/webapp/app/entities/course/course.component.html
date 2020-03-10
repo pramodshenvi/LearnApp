@@ -18,52 +18,22 @@
         <span>No courses found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="courses?.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-                    <th scope="col"  jhiSortBy="courseName"><span>Course Name</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="smeSkills"><span>Sme Skills</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="preRequisites"><span>Pre Requisites</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="smePoints"><span>SME Points</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="participantPoints"><span>Participant Points</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="imagePath"><span>Image Path</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-                <tr *ngFor="let course of courses ;trackBy: trackId">
-                    <td><a [routerLink]="['/course', course.id, 'view']">{{ course.courseName }}</a></td>
-                    <td>{{ course.smeSkills }}</td>
-                    <td>{{ course.preRequisites }}</td>
-                    <td>{{ course.smePoints }}</td>
-                    <td>{{ course.participantPoints }}</td>
-                    <td>{{ course.imagePath }}</td>
-                    <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/course', course.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline">View</span>
-                            </button>
-
-                            <button type="submit"
-                                    [routerLink]="['/course', course.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline">Edit</span>
-                            </button>
-
-                            <button type="submit" (click)="delete(course)"
-                                    class="btn btn-danger btn-sm">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline">Delete</span>
-                            </button>
+    <div id="entities" *ngIf="courses?.length > 0">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let course of courses ;trackBy: trackId">
+                <a [routerLink]="['/course', course.id, 'view']">
+                    <div class="courseCard" [ngStyle]="{ 'background-image': 'url(' + course.imagePath + ')'}">
+                        <div class="layer">
+                            <div class="courseName">{{ course.courseName }}</div>
+                            <div class="pointsContainer">
+                                <span>Points</span>
+                                <div class="smePoints">{{ course.smePoints }} (SME)</div>
+                                <div *ngIf="course.participantPoints" class="participantPoints">{{ course.participantPoints }} (Participant)</div>
+                            </div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
 </div>

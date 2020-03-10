@@ -12,7 +12,8 @@ import { CourseDeleteDialogComponent } from './course-delete-dialog.component';
 
 @Component({
   selector: 'jhi-course',
-  templateUrl: './course.component.html'
+  templateUrl: './course.component.html',
+  styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit, OnDestroy {
   courses: ICourse[];
