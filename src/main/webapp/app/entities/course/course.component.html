@@ -25,7 +25,8 @@
                     <th scope="col"  jhiSortBy="courseName"><span>Course Name</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="smeSkills"><span>Sme Skills</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="preRequisites"><span>Pre Requisites</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="points"><span>Points</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="smePoints"><span>SME Points</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="participantPoints"><span>Participant Points</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="imagePath"><span>Image Path</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
@@ -35,7 +36,8 @@
                     <td><a [routerLink]="['/course', course.id, 'view']">{{ course.courseName }}</a></td>
                     <td>{{ course.smeSkills }}</td>
                     <td>{{ course.preRequisites }}</td>
-                    <td>{{ course.points }}</td>
+                    <td>{{ course.smePoints }}</td>
+                    <td>{{ course.participantPoints }}</td>
                     <td>{{ course.imagePath }}</td>
                     <td class="text-right">
                         <div class="btn-group">

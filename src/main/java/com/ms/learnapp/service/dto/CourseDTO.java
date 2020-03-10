@@ -21,7 +21,9 @@ public class CourseDTO implements Serializable {
     private String preRequisites;
 
     @NotNull
-    private Integer points;
+    private Integer smePoints;
+
+    private Integer participantPoints;
 
     private String imagePath;
 
@@ -56,14 +58,6 @@ public class CourseDTO implements Serializable {
 
     public void setPreRequisites(String preRequisites) {
         this.preRequisites = preRequisites;
-    }
-
-    public Integer getPoints() {
-        return points;
-    }
-
-    public void setPoints(Integer points) {
-        this.points = points;
     }
 
     public String getImagePath() {
@@ -102,8 +96,25 @@ public class CourseDTO implements Serializable {
             ", courseName='" + getCourseName() + "'" +
             ", smeSkills='" + getSmeSkills() + "'" +
             ", preRequisites='" + getPreRequisites() + "'" +
-            ", points=" + getPoints() +
+            ", smePoints=" + getSmePoints() +
+            ", participantPoints=" + getParticipantPoints() +
             ", imagePath='" + getImagePath() + "'" +
             "}";
+    }
+
+    public Integer getSmePoints() {
+        return smePoints;
+    }
+
+    public void setSmePoints(Integer smePoints) {
+        this.smePoints = smePoints;
+    }
+
+    public Integer getParticipantPoints() {
+        return participantPoints;
+    }
+
+    public void setParticipantPoints(Integer participantPoints) {
+        this.participantPoints = participantPoints;
     }
 }

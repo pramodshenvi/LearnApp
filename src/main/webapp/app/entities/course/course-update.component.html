@@ -45,16 +45,32 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" for="field_points">Points</label>
-                    <input type="number" class="form-control" name="points" id="field_points"
-                           formControlName="points"/>
-                    <div *ngIf="editForm.get('points')!.invalid && (editForm.get('points')!.dirty || editForm.get('points')!.touched)">
+                    <label class="form-control-label" for="field_points">SME Points</label>
+                    <input type="number" class="form-control" name="smePoints" id="field_points"
+                           formControlName="smePoints"/>
+                    <div *ngIf="editForm.get('smePoints')!.invalid && (editForm.get('smePoints')!.dirty || editForm.get('smePoints')!.touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('points')?.errors?.required">
+                               *ngIf="editForm.get('smePoints')?.errors?.required">
                         This field is required.
                         </small>
                         <small class="form-text text-danger"
-                            [hidden]="!editForm.get('points')?.errors?.number">
+                            [hidden]="!editForm.get('smePoints')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_points">Participant Points</label>
+                    <input type="number" class="form-control" name="participantPoints" id="field_points"
+                           formControlName="participantPoints"/>
+                    <div *ngIf="editForm.get('participantPoints')!.invalid && (editForm.get('participantPoints')!.dirty || editForm.get('participantPoints')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('participantPoints')?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('participantPoints')?.errors?.number">
                             This field should be a number.
                         </small>
                     </div>

@@ -31,8 +31,11 @@ public class Course implements Serializable {
     private String preRequisites;
 
     @NotNull
-    @Field("points")
-    private Integer points;
+    @Field("smePoints")
+    private Integer smePoints;
+
+    @Field("participantPoints")
+    private Integer participantPoints;
 
     @Field("image_path")
     private String imagePath;
@@ -85,17 +88,14 @@ public class Course implements Serializable {
         this.preRequisites = preRequisites;
     }
 
-    public Integer getPoints() {
-        return points;
-    }
-
-    public Course points(Integer points) {
-        this.points = points;
+    public Course smePoints(Integer smePoints) {
+        this.smePoints = smePoints;
         return this;
     }
 
-    public void setPoints(Integer points) {
-        this.points = points;
+    public Course participantPoints(Integer participantPoints) {
+        this.participantPoints = participantPoints;
+        return this;
     }
 
     public String getImagePath() {
@@ -135,8 +135,25 @@ public class Course implements Serializable {
             ", courseName='" + getCourseName() + "'" +
             ", smeSkills='" + getSmeSkills() + "'" +
             ", preRequisites='" + getPreRequisites() + "'" +
-            ", points=" + getPoints() +
+            ", smePoints=" + getSmePoints() +
+            ", participantPoints=" + getParticipantPoints() +
             ", imagePath='" + getImagePath() + "'" +
             "}";
+    }
+
+    public Integer getSmePoints() {
+        return smePoints;
+    }
+
+    public void setSmePoints(Integer smePoints) {
+        this.smePoints = smePoints;
+    }
+
+    public Integer getParticipantPoints() {
+        return participantPoints;
+    }
+
+    public void setParticipantPoints(Integer participantPoints) {
+        this.participantPoints = participantPoints;
     }
 }

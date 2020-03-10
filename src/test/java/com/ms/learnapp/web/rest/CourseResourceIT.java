@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.Validator;
 
-
+import java.util.Arrays;
 import java.util.List;
 
 import static com.ms.learnapp.web.rest.TestUtil.createFormattingConversionService;
@@ -38,8 +38,8 @@ public class CourseResourceIT {
     private static final String DEFAULT_COURSE_NAME = "AAAAAAAAAA";
     private static final String UPDATED_COURSE_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_SME_SKILLS = "AAAAAAAAAA";
-    private static final String UPDATED_SME_SKILLS = "BBBBBBBBBB";
+    private static final List<String> DEFAULT_SME_SKILLS = Arrays.asList(new String[]{"AAAAAAAAAA"}); 
+    private static final List<String> UPDATED_SME_SKILLS = Arrays.asList(new String[]{"BBBBBBBBBB"});
 
     private static final String DEFAULT_PRE_REQUISITES = "AAAAAAAAAA";
     private static final String UPDATED_PRE_REQUISITES = "BBBBBBBBBB";
@@ -98,7 +98,8 @@ public class CourseResourceIT {
             .courseName(DEFAULT_COURSE_NAME)
             .smeSkills(DEFAULT_SME_SKILLS)
             .preRequisites(DEFAULT_PRE_REQUISITES)
-            .points(DEFAULT_POINTS)
+            .smePoints(DEFAULT_POINTS)
+            .participantPoints(DEFAULT_POINTS)
             .imagePath(DEFAULT_IMAGE_PATH);
         return course;
     }
@@ -113,7 +114,7 @@ public class CourseResourceIT {
             .courseName(UPDATED_COURSE_NAME)
             .smeSkills(UPDATED_SME_SKILLS)
             .preRequisites(UPDATED_PRE_REQUISITES)
-            .points(UPDATED_POINTS)
+            .smePoints(UPDATED_POINTS)
             .imagePath(UPDATED_IMAGE_PATH);
         return course;
     }
@@ -142,7 +143,7 @@ public class CourseResourceIT {
         assertThat(testCourse.getCourseName()).isEqualTo(DEFAULT_COURSE_NAME);
         assertThat(testCourse.getSmeSkills()).isEqualTo(DEFAULT_SME_SKILLS);
         assertThat(testCourse.getPreRequisites()).isEqualTo(DEFAULT_PRE_REQUISITES);
-        assertThat(testCourse.getPoints()).isEqualTo(DEFAULT_POINTS);
+        assertThat(testCourse.getSmePoints()).isEqualTo(DEFAULT_POINTS);
         assertThat(testCourse.getImagePath()).isEqualTo(DEFAULT_IMAGE_PATH);
     }
 
@@ -206,7 +207,7 @@ public class CourseResourceIT {
     public void checkPointsIsRequired() throws Exception {
         int databaseSizeBeforeTest = courseRepository.findAll().size();
         // set the field null
-        course.setPoints(null);
+        course.setSmePoints(null);
 
         // Create the Course, which fails.
         CourseDTO courseDTO = courseMapper.toDto(course);
@@ -233,7 +234,7 @@ public class CourseResourceIT {
             .andExpect(jsonPath("$.[*].courseName").value(hasItem(DEFAULT_COURSE_NAME)))
             .andExpect(jsonPath("$.[*].smeSkills").value(hasItem(DEFAULT_SME_SKILLS)))
             .andExpect(jsonPath("$.[*].preRequisites").value(hasItem(DEFAULT_PRE_REQUISITES)))
-            .andExpect(jsonPath("$.[*].points").value(hasItem(DEFAULT_POINTS)))
+            .andExpect(jsonPath("$.[*].smePoints").value(hasItem(DEFAULT_POINTS)))
             .andExpect(jsonPath("$.[*].imagePath").value(hasItem(DEFAULT_IMAGE_PATH)));
     }
     
@@ -250,7 +251,7 @@ public class CourseResourceIT {
             .andExpect(jsonPath("$.courseName").value(DEFAULT_COURSE_NAME))
             .andExpect(jsonPath("$.smeSkills").value(DEFAULT_SME_SKILLS))
             .andExpect(jsonPath("$.preRequisites").value(DEFAULT_PRE_REQUISITES))
-            .andExpect(jsonPath("$.points").value(DEFAULT_POINTS))
+            .andExpect(jsonPath("$.smePoints").value(DEFAULT_POINTS))
             .andExpect(jsonPath("$.imagePath").value(DEFAULT_IMAGE_PATH));
     }
 
@@ -274,7 +275,7 @@ public class CourseResourceIT {
             .courseName(UPDATED_COURSE_NAME)
             .smeSkills(UPDATED_SME_SKILLS)
             .preRequisites(UPDATED_PRE_REQUISITES)
-            .points(UPDATED_POINTS)
+            .smePoints(UPDATED_POINTS)
             .imagePath(UPDATED_IMAGE_PATH);
         CourseDTO courseDTO = courseMapper.toDto(updatedCourse);
 
@@ -290,7 +291,7 @@ public class CourseResourceIT {
         assertThat(testCourse.getCourseName()).isEqualTo(UPDATED_COURSE_NAME);
         assertThat(testCourse.getSmeSkills()).isEqualTo(UPDATED_SME_SKILLS);
         assertThat(testCourse.getPreRequisites()).isEqualTo(UPDATED_PRE_REQUISITES);
-        assertThat(testCourse.getPoints()).isEqualTo(UPDATED_POINTS);
+        assertThat(testCourse.getSmePoints()).isEqualTo(UPDATED_POINTS);
         assertThat(testCourse.getImagePath()).isEqualTo(UPDATED_IMAGE_PATH);
     }
 

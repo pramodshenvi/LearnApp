@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(CourseService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Course('ID', 'AAAAAAA', ['AAAAAAA'], 'AAAAAAA', 0, 'AAAAAAA');
+      elemDefault = new Course('ID', 'AAAAAAA', ['AAAAAAA'], 'AAAAAAA', 0, 0, 'AAAAAAA');
     });
 
     describe('Service methods', () => {
@@ -57,7 +57,8 @@ describe('Service Tests', () => {
             courseName: 'BBBBBB',
             smeSkills: 'BBBBBB',
             preRequisites: 'BBBBBB',
-            points: 1,
+            smePoints: 1,
+            participantPoints: 1,
             imagePath: 'BBBBBB'
           },
           elemDefault
@@ -78,7 +79,8 @@ describe('Service Tests', () => {
             courseName: 'BBBBBB',
             smeSkills: 'BBBBBB',
             preRequisites: 'BBBBBB',
-            points: 1,
+            smePoints: 1,
+            participantPoints: 1,
             imagePath: 'BBBBBB'
           },
           elemDefault

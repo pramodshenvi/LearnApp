@@ -26,7 +26,8 @@ export class CourseUpdateComponent implements OnInit {
     id: [],
     courseName: [null, [Validators.required]],
     preRequisites: [],
-    points: [null, [Validators.required]],
+    smePoints: [null, [Validators.required]],
+    participantPoints: [],
     imagePath: [],
     newSMESkill: []
   });
@@ -73,7 +74,8 @@ export class CourseUpdateComponent implements OnInit {
       courseName: course.courseName,
       smeSkills: course.smeSkills,
       preRequisites: course.preRequisites,
-      points: course.points,
+      smePoints: course.smePoints,
+      participantPoints: course.participantPoints,
       imagePath: course.imagePath
     });
   }
@@ -99,7 +101,8 @@ export class CourseUpdateComponent implements OnInit {
       courseName: this.editForm.get(['courseName'])!.value,
       smeSkills: this.smeSkills,
       preRequisites: this.editForm.get(['preRequisites'])!.value,
-      points: this.editForm.get(['points'])!.value,
+      smePoints: this.editForm.get(['smePoints'])!.value,
+      participantPoints: this.editForm.get(['participantPoints'])!.value,
       imagePath: this.editForm.get(['imagePath'])!.value
     };
   }
