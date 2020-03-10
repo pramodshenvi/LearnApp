@@ -1,0 +1,58 @@
+<div>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="entities" *ngIf="recommendationSME?.length > 0">
+        <br><br><hr>
+        <h3 id="page-heading">
+            <span>You might like to host!</span>
+        </h3>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let course of recommendationSME ;">
+                <a [routerLink]="['/course', course.id, 'view']">
+                    <div class="smeCard">
+                        <div class="courseImage" [ngStyle]="{ 'background-image': 'url(' + course.imagePath + ')'}">
+                        </div>
+                        <div class="courseDescription">
+                            <div class="courseName">{{ course.courseName }}</div>
+                            <div class="smeSkillsRequired">Skills Required: {{ course.smeSkills }}</div>
+                            <div class="smePoints">
+                                <span>Hosting Points: </span>
+                                <span class="smePointsNum">{{ course.smePoints }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="entities" *ngIf="recommendationParticipant?.length > 0">
+        <br><br><hr>
+        <h3 id="page-heading">
+            <span>You might like to attend!</span>
+        </h3>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let course of recommendationParticipant ;">
+                <a [routerLink]="['/course', course.id, 'view']">
+                    <div class="participantCard" [ngStyle]="{ 'background-image': 'url(' + course.imagePath + ')'}">
+                        <div class="layer">
+                            <div class="courseName">{{ course.courseName }}</div>
+                            <div class="pointsContainer">
+                                <span>Points</span>
+                                <div class="smePoints">{{ course.smePoints }} (SME)</div>
+                                <div *ngIf="course.participantPoints" class="participantPoints">{{ course.participantPoints }} (Participant)</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center viewAllButtonContainer">
+        <a [routerLink]="['/course']">
+            <div class="viewAllButton">View all Courses!</div>
+        </a>
+    </div>
+</div>
