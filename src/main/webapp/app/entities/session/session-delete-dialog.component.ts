@@ -21,6 +21,7 @@ export class SessionDeleteDialogComponent {
     this.sessionService.delete(id).subscribe(() => {
       this.eventManager.broadcast('sessionListModification');
       this.activeModal.close();
+      window.history.back();
     });
   }
 }

@@ -11,54 +11,35 @@
         <span>No sessions found</span>
     </div>
 
-    <div class="table-responsive" id="entities" *ngIf="sessions?.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-                    <th scope="col"  jhiSortBy="topic"><span>Topic</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="agenda"><span>Agenda</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="sessionDateTime"><span>Session Date Time</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="location"><span>Location</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="sessionPreRequisites"><span>Session Pre Requisites</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="assignedSMEs"><span>Assigned SM Es</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="attendanceLocation"><span>Attendance Location</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-                <tr *ngFor="let session of sessions ;trackBy: trackId">
-                    <td><a [routerLink]="['/course/session', session.id, 'view']">{{ session.topic }}</a></td>
-                    <td>{{ session.agenda }}</td>
-                    <td>{{ session.sessionDateTime | date:'medium' }}</td>
-                    <td>{{ session.location }}</td>
-                    <td>{{ session.sessionPreRequisites }}</td>
-                    <td>{{ session.assignedSMEs }}</td>
-                    <td>{{ session.attendanceLocation }}</td>
-                    <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/course/session', session.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline">View</span>
-                            </button>
-
-                            <button type="submit"
-                                    [routerLink]="['/course/session', session.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline">Edit</span>
-                            </button>
-
-                            <button type="submit" (click)="delete(session)"
-                                    class="btn btn-danger btn-sm">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline">Delete</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <div id="entities" *ngIf="sessions?.length > 0">
+        <div class="sessionEntity row" *ngFor="let session of sessions ;trackBy: trackId">
+            <div class="sessionDetailsContainer col-sm-12 col-md-6">
+                <div class="sessionName"><a [routerLink]="['/course/session', session.id, 'view']">{{ session.topic }}</a></div>
+                <div class="sessionAgenda">{{ session.agenda }}</div>
+                <div *ngIf="session.assignedSMEs" class="sessionSMEs">Hosted By: {{ session.assignedSMEs }}</div>
+            </div>
+            <div class="sessionLocationButtonContainer col-sm-12 col-md-6 row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="sessionDate">{{ session.sessionDateTime | date:'medium' }}</div>
+                    <div class="sessionLocation">{{ session.location }}</div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="sessionButtons float-right">
+                        <button type="submit"
+                                [routerLink]="['/course/session', session.id, 'view']"
+                                class="btn btn-info btn-sm">
+                            <fa-icon icon="calendar-alt"></fa-icon>
+                            <span class="d-none d-md-inline">&nbsp;&nbsp;Register</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/course/session', session.id, 'view']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon icon="user-tie"></fa-icon>
+                            <span class="d-none d-md-inline">&nbsp;&nbsp;I am SME!</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>       
 </div>

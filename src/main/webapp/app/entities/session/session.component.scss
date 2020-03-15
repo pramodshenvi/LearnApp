@@ -1,0 +1,48 @@
+.sessionDetailsContainer {
+  margin-bottom: 10px;
+}
+
+.sessionEntity.row {
+  border: 1px solid #868686;
+  border-radius: 10px;
+  padding: 20px 0px;
+  margin: 15px 0px;
+}
+
+.sessionEntity:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sessionEntity .sessionName a:hover {
+  text-decoration: none;
+}
+.sessionEntity .sessionButtons button {
+  margin-left: 10px;
+}
+
+.sessionEntity .sessionName {
+  font-size: 25px;
+}
+
+.sessionEntity .sessionAgenda {
+  font-size: 15px;
+  font-style: italic;
+}
+
+.sessionEntity .sessionSMEs {
+  margin-top: 5px;
+}
+
+.sessionEntity .sessionLocation {
+  font-size: 20px;
+  margin-top: 5px;
+  color: #58a365;
+}
+
+.sessionEntity .sessionDate {
+  font-weight: 600;
+}
+
+.sessionEntity .sessionButtons {
+  margin-top: 15px;
+}

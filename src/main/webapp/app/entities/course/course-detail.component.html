@@ -36,17 +36,16 @@
                 <button type="submit"
                         (click)="previousState()"
                         class="btn btn-info">
-                    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+                    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span class="d-none d-md-inline">Back</span>
                 </button>
                 <button type="button"
                         [routerLink]="['/course', course.id, 'edit']"
                         class="btn btn-primary">
-                    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+                    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span class="d-none d-md-inline">Edit</span>
                 </button>
                 <button type="submit" (click)="delete(course)"
                         class="btn btn-danger">
-                    <fa-icon icon="times"></fa-icon>
-                    <span class="d-none d-md-inline">Delete</span>
+                    <fa-icon icon="times"></fa-icon>&nbsp;<span class="d-none d-md-inline">Delete</span>
                 </button>
                 <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-session" 
                         [routerLink]="['/course/session/new']">

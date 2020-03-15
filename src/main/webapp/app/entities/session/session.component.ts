@@ -13,7 +13,8 @@ import { MessengerService } from 'app/shared/util/messenger-service';
 
 @Component({
   selector: 'jhi-session',
-  templateUrl: './session.component.html'
+  templateUrl: './session.component.html',
+  styleUrls: ['./session.component.scss']
 })
 export class SessionComponent implements OnInit, OnDestroy {
   sessions: ISession[];

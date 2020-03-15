@@ -22,7 +22,7 @@ export class CourseDeleteDialogComponent {
     this.courseService.delete(id).subscribe(() => {
       this.eventManager.broadcast('courseListModification');
       this.activeModal.close();
-      this.router.navigate(["/course"])
+      window.history.back();
     });
   }
 }
