@@ -15,6 +15,7 @@ import { Router } from "@angular/router";
 export class SessionDetailComponent implements OnInit {
   session: ISession | null = null;
   courseDetails: any = {};
+  sessionQRUrl: string | null = null;
 
   constructor(
       protected activatedRoute: ActivatedRoute, 
@@ -26,7 +27,11 @@ export class SessionDetailComponent implements OnInit {
     this.courseDetails = this.messengerService.getCourseDetails();
     if(!this.courseDetails)
       this.router.navigate(["/course"])
-    this.activatedRoute.data.subscribe(({ session }) => (this.session = session));
+    this.activatedRoute.data.subscribe(({ session }) => {
+      this.session = session;
+      const qrCodeUrl = window.location.origin+'/participant.html?q='+escape(session.id);
+      this.sessionQRUrl = 'https://chart.googleapis.com/chart?cht=qr&chl='+qrCodeUrl+'&chs=400x400&choe=UTF-8&chld=L|2'
+    });
   }
 
   previousState(): void {
@@ -36,5 +41,17 @@ export class SessionDetailComponent implements OnInit {
   delete(session: ISession): void {
     const modalRef = this.modalService.open(SessionDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.session = session;
+  }
+
+  printQRCode(): void {
+    const popup = window.open();
+    if(popup){
+      const topic = this.session? this.session.topic : "";
+      const dateTime = this.session && this.session.sessionDateTime? this.session.sessionDateTime.toDate().toUTCString() : "";
+      popup.document.write("<html><body><h1>"+topic+"</h1><h3>"+dateTime+"</h3><br><br><br><div style=\"text-align:center;\"><img src="+this.sessionQRUrl+"></div></body></html>");
+      popup.focus();
+      popup.print();
+      popup.close();
+    }
   }
 }

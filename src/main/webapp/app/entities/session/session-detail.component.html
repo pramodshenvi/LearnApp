@@ -3,66 +3,95 @@
         <div *ngIf="session">
             <h2>{{ session.topic }}</h2>
             <h5>{{ session.sessionDateTime | date:'medium' }}</h5>
-            <hr>
 
             <jhi-alert-error></jhi-alert-error>
 
-            <div class="row">
-                <div class="col-md-7">
-                    <dl class="row-md jh-entity-details">
-                        <dt><span>Agenda</span></dt>
-                        <dd>
-                            <span>{{ session.agenda }}</span>
-                        </dd>
-                        <dt><span>Location</span></dt>
-                        <dd>
-                            <span>{{ session.location }}</span>
-                        </dd>
-                        <dt><span>Attendance Location</span></dt>
-                        <dd>
-                            <span>{{ session.attendanceLocation }}</span>
-                        </dd>
-                        <dt><span>Session Pre Requisites</span></dt>
-                        <dd>
-                            <span>{{ session.sessionPreRequisites }}</span>
-                        </dd>
-                        <dt><span>Hosted By</span></dt>
-                        <dd>
-                            <span>{{ session.assignedSMEs }}</span>
-                        </dd>
-                    </dl>
-                </div>
-                <div *ngIf="courseDetails" class="sessionCourse col-md-5">
-                    <a [routerLink]="['/course', courseDetails.id, 'view']">
-                        <div class="courseCard" [ngStyle]="{ 'background-image': 'url(' + courseDetails.imagePath + ')'}">
-                            <div class="layer">
-                                <div class="courseName">{{ courseDetails.courseName }}</div>
-                                <div class="pointsContainer">
-                                    <span>Points</span>
-                                    <div class="smePoints">{{ courseDetails.smePoints }} (SME)</div>
-                                    <div *ngIf="courseDetails.participantPoints" class="participantPoints">{{ courseDetails.participantPoints }} (Participant)</div>
+            <mat-tab-group>
+                <mat-tab label="Session Details">
+                    <div class="sessionDetails">
+                        <div class="sessionDetailsRow row">
+                            <div class="col-md-7">
+                                <dl class="row-md jh-entity-details">
+                                    <dt><span>Agenda</span></dt>
+                                    <dd>
+                                        <span>{{ session.agenda }}</span>
+                                    </dd>
+                                    <dt><span>Location</span></dt>
+                                    <dd>
+                                        <span>{{ session.location }}</span>
+                                    </dd>
+                                    <dt><span>Attendance Location</span></dt>
+                                    <dd>
+                                        <span>{{ session.attendanceLocation }}</span>
+                                    </dd>
+                                    <dt><span>Session Pre Requisites</span></dt>
+                                    <dd>
+                                        <span>{{ session.sessionPreRequisites }}</span>
+                                    </dd>
+                                    <dt><span>Hosted By</span></dt>
+                                    <dd>
+                                        <span>{{ session.assignedSMEs }}</span>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div *ngIf="courseDetails" class="sessionCourse col-md-5">
+                                <a [routerLink]="['/course', courseDetails.id, 'view']">
+                                    <div class="courseCard" [ngStyle]="{ 'background-image': 'url(' + courseDetails.imagePath + ')'}">
+                                        <div class="layer">
+                                            <div class="courseName">{{ courseDetails.courseName }}</div>
+                                            <div class="pointsContainer">
+                                                <span>Points</span>
+                                                <div class="smePoints">{{ courseDetails.smePoints }} (SME)</div>
+                                                <div *ngIf="courseDetails.participantPoints" class="participantPoints">{{ courseDetails.participantPoints }} (Participant)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="sessionDetailsButtons">
+                            <button type="submit"
+                                    (click)="previousState()"
+                                    class="btn btn-info">
+                                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span class="d-none d-md-inline">Back</span>
+                            </button>
+                
+                            <button type="button"
+                                    [routerLink]="['/course/session', session.id, 'edit']"
+                                    class="btn btn-primary">
+                                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span class="d-none d-md-inline">Edit</span>
+                            </button>
+                
+                            <button type="submit" (click)="delete(session)"
+                                    class="btn btn-danger">
+                                <fa-icon icon="times"></fa-icon>&nbsp;<span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Attendance Tracking"> 
+                    <div class="sessionDetails">
+                        <div class="sessionDetailsRow row">
+                            <div class="imageContainer col-sm-12 col-md-6">
+                                <img [src]=sessionQRUrl>
+                            </div>
+                            <div class="buttonContainer col-sm-12 col-md-6">
+                                <div class="qrButton">
+                                    <a [href]=sessionQRUrl target="_blank" download>
+                                        <fa-icon icon="download"></fa-icon>&nbsp;Download                                        
+                                    </a>
+                                </div>
+                                <div class="qrButton" (click)="printQRCode()">
+                                    <a href="#" target="_blank">
+                                        <fa-icon icon="print"></fa-icon>&nbsp;Print
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </a>
-                </div>
-            </div>
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span class="d-none d-md-inline">Back</span>
-            </button>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
 
-            <button type="button"
-                    [routerLink]="['/course/session', session.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span class="d-none d-md-inline">Edit</span>
-            </button>
-
-            <button type="submit" (click)="delete(session)"
-                    class="btn btn-danger">
-                <fa-icon icon="times"></fa-icon>&nbsp;<span class="d-none d-md-inline">Delete</span>
-            </button>
         </div>
     </div>
 </div>
