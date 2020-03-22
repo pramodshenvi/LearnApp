@@ -38,6 +38,9 @@ public class Session implements Serializable {
     @Field("session_date_time")
     private ZonedDateTime sessionDateTime;
 
+    @Field("session_complete")
+    private Boolean sessionComplete;
+
     @NotNull
     @Field("location")
     private SessionLocation location;
@@ -188,5 +191,18 @@ public class Session implements Serializable {
 
     public void setCourseId(String courseId) {
         this.courseId = courseId;
+    }
+
+    public Boolean getSessionComplete() {
+        return sessionComplete;
+    }
+
+    public void setSessionComplete(Boolean sessionComplete) {
+        this.sessionComplete = sessionComplete;
+    }
+
+    public Session sessionComplete(Boolean sessionComplete) {
+        this.sessionComplete = sessionComplete;
+        return this;
     }
 }

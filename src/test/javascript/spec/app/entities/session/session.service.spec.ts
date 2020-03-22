@@ -32,6 +32,7 @@ describe('Service Tests', () => {
         'AAAAAAA',
         'AAAAAAA',
         currentDate,
+        false,
         SessionLocation.BANGALORE,
         'AAAAAAA',
         'AAAAAAA',

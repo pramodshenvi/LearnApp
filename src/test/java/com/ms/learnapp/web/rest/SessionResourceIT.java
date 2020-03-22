@@ -111,6 +111,7 @@ public class SessionResourceIT {
             .topic(DEFAULT_TOPIC)
             .agenda(DEFAULT_AGENDA)
             .sessionDateTime(DEFAULT_SESSION_DATE_TIME)
+            .sessionComplete(false)
             .location(DEFAULT_LOCATION)
             .sessionPreRequisites(DEFAULT_SESSION_PRE_REQUISITES)
             .assignedSMEs(DEFAULT_ASSIGNED_SM_ES)

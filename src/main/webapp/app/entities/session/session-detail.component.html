@@ -2,7 +2,7 @@
     <div class="col-8">
         <div *ngIf="session">
             <h2>{{ session.topic }}</h2>
-            <h5>{{ session.sessionDateTime | date:'medium' }}</h5>
+            <h5>{{ session.sessionDateTime | date:'medium' }} {{session.sessionComplete ? '| Completed' : ''}}</h5>
 
             <jhi-alert-error></jhi-alert-error>
 
@@ -66,26 +66,33 @@
                                     class="btn btn-danger">
                                 <fa-icon icon="times"></fa-icon>&nbsp;<span class="d-none d-md-inline">Delete</span>
                             </button>
+
+                            <button type="submit" (click)="markSessionAsComplete(session)"
+                                    class="btn btn-primary float-right"
+                                    *ngIf="!session.sessionComplete">
+                                <fa-icon icon="calendar-check"></fa-icon>&nbsp;&nbsp;<span class="d-none d-md-inline">Mark Session as Complete</span>
+                            </button>
                         </div>
                     </div>
                 </mat-tab>
                 <mat-tab label="Attendance Tracking"> 
                     <div class="sessionDetails">
                         <div class="sessionDetailsRow row">
-                            <div class="imageContainer col-sm-12 col-md-6">
+                            <div class="imageContainer col-sm-12 col-md-8">
                                 <img [src]=sessionQRUrl>
                             </div>
-                            <div class="buttonContainer col-sm-12 col-md-6">
+                            <div class="buttonContainer col-sm-12 col-md-4">
                                 <div class="qrButton">
                                     <a [href]=sessionQRUrl target="_blank" download>
-                                        <fa-icon icon="download"></fa-icon>&nbsp;Download                                        
+                                        <fa-icon icon="download"></fa-icon>&nbsp;&nbsp;&nbsp;Download                                        
                                     </a>
                                 </div>
                                 <div class="qrButton" (click)="printQRCode()">
                                     <a href="#" target="_blank">
-                                        <fa-icon icon="print"></fa-icon>&nbsp;Print
+                                        <fa-icon icon="print"></fa-icon>&nbsp;&nbsp;&nbsp;Print
                                     </a>
                                 </div>
+                                <div class="attendeeDownloadBtn" (click)="downloadAttendeeList()" *ngIf="session.sessionComplete"><fa-icon icon="users"></fa-icon>&nbsp;&nbsp;Download Attendee Report</div>
                             </div>
                         </div>
                     </div>

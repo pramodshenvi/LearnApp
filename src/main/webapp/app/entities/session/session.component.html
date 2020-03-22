@@ -27,16 +27,19 @@
                     <div class="sessionButtons float-right">
                         <button type="submit"
                                 [routerLink]="['/course/session', session.id, 'view']"
-                                class="btn btn-info btn-sm">
+                                class="btn btn-info btn-sm"
+                                *ngIf="!session.sessionComplete">
                             <fa-icon icon="calendar-alt"></fa-icon>
                             <span class="d-none d-md-inline">&nbsp;&nbsp;Register</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/course/session', session.id, 'view']"
-                                class="btn btn-primary btn-sm">
+                                class="btn btn-primary btn-sm"
+                                *ngIf="!session.sessionComplete">
                             <fa-icon icon="user-tie"></fa-icon>
                             <span class="d-none d-md-inline">&nbsp;&nbsp;I am SME!</span>
                         </button>
+                        <div *ngIf="session.sessionComplete">Session Completed!</div>
                     </div>
                 </div>
             </div>

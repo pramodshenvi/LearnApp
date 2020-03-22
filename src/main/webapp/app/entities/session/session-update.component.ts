@@ -82,6 +82,7 @@ export class SessionUpdateComponent implements OnInit {
       sessionDateTime: this.editForm.get(['sessionDateTime'])!.value
         ? moment(this.editForm.get(['sessionDateTime'])!.value, DATE_TIME_FORMAT)
         : undefined,
+      sessionComplete: false,
       location: this.editForm.get(['location'])!.value,
       sessionPreRequisites: this.editForm.get(['sessionPreRequisites'])!.value,
       assignedSMEs: this.editForm.get(['assignedSMEs'])!.value,

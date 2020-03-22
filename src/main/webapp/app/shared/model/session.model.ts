@@ -8,6 +8,7 @@ export interface ISession {
   topic?: string;
   agenda?: string;
   sessionDateTime?: Moment;
+  sessionComplete?: boolean;
   location?: SessionLocation;
   sessionPreRequisites?: string;
   assignedSMEs?: string;
@@ -21,6 +22,7 @@ export class Session implements ISession {
     public topic?: string,
     public agenda?: string,
     public sessionDateTime?: Moment,
+    public sessionComplete?: boolean,
     public location?: SessionLocation,
     public sessionPreRequisites?: string,
     public assignedSMEs?: string,

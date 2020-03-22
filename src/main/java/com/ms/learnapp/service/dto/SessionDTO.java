@@ -25,6 +25,8 @@ public class SessionDTO implements Serializable {
 
     private ZonedDateTime sessionDateTime;
 
+    private Boolean sessionComplete;
+
     @NotNull
     private SessionLocation location;
 
@@ -141,5 +143,13 @@ public class SessionDTO implements Serializable {
 
     public void setCourseId(String courseId) {
         this.courseId = courseId;
+    }
+
+    public Boolean getSessionComplete() {
+        return sessionComplete;
+    }
+
+    public void setSessionComplete(Boolean sessionComplete) {
+        this.sessionComplete = sessionComplete;
     }
 }

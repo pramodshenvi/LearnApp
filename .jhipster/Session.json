@@ -29,6 +29,10 @@
             "fieldType": "ZonedDateTime"
         },
         {
+            "fieldName": "sessionComplete",
+            "fieldType": "Boolean"
+        },
+        {
             "fieldName": "location",
             "fieldType": "SessionLocation",
             "fieldValues": "BANGALORE,MUMBAI,MULTIPLE,CONFERENCE",

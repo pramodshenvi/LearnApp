@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ISession } from 'app/shared/model/session.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SessionDeleteDialogComponent } from './session-delete-dialog.component';
+import { SessionMarkCompleteDialogComponent } from './session-mark-complete-dialog.component';
 import { MessengerService } from 'app/shared/util/messenger-service';
 import { Router } from "@angular/router";
 
@@ -53,5 +54,14 @@ export class SessionDetailComponent implements OnInit {
       popup.print();
       popup.close();
     }
+  }
+
+  markSessionAsComplete(session: ISession): void {
+    const modalRef = this.modalService.open(SessionMarkCompleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.session = session;
+  }
+
+  downloadAttendeeList(): void {
+    /* ToDo complete this */
   }
 }
