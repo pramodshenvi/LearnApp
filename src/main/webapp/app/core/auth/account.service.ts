@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject, of } from 'rxjs';
 import { shareReplay, tap, catchError } from 'rxjs/operators';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { MessengerService } from 'app/shared/util/messenger-service';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { Account } from 'app/core/user/account.model';
@@ -14,7 +15,7 @@ export class AccountService {
   private authenticationState = new ReplaySubject<Account | null>(1);
   private accountCache$?: Observable<Account | null>;
 
-  constructor(private http: HttpClient, private stateStorageService: StateStorageService, private router: Router) {}
+  constructor(private http: HttpClient, private stateStorageService: StateStorageService, private router: Router, protected messengerService: MessengerService) {}
 
   save(account: Account): Observable<{}> {
     return this.http.post(SERVER_API_URL + 'api/account', account);
@@ -45,6 +46,7 @@ export class AccountService {
           this.authenticate(account);
 
           if (account) {
+            this.messengerService.setAccount(account);
             this.navigateToStoredUrl();
           }
         }),

@@ -122,3 +122,7 @@
 .attendeeDownloadBtn:hover {
   background-color: #d7d7d7;
 }
+
+::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+  width: 50%!important;
+}

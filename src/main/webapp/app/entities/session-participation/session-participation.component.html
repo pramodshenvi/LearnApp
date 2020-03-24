@@ -1,0 +1,71 @@
+<div>
+    <h2 id="page-heading">
+        <span>Session Participations</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-session-participation" [routerLink]="['/session-participation/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new Session Participation
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="sessionParticipations?.length === 0">
+        <span>No sessionParticipations found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="sessionParticipations?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="sessionId"><span>Session Id</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="userName"><span>User Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="userEmail"><span>User Email</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="registrationDateTime"><span>Registration Date Time</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="attendanceDateTime"><span>Attendance Date Time</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="userId"><span>User Id</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let sessionParticipation of sessionParticipations ;trackBy: trackId">
+                    <td><a [routerLink]="['/session-participation', sessionParticipation.id, 'view']">{{ sessionParticipation.id }}</a></td>
+                    <td>{{ sessionParticipation.sessionId }}</td>
+                    <td>{{ sessionParticipation.userName }}</td>
+                    <td>{{ sessionParticipation.userEmail }}</td>
+                    <td>{{ sessionParticipation.registrationDateTime | date:'medium' }}</td>
+                    <td>{{ sessionParticipation.attendanceDateTime | date:'medium' }}</td>
+                    <td>{{ sessionParticipation.userId }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/session-participation', sessionParticipation.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/session-participation', sessionParticipation.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(sessionParticipation)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

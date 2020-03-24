@@ -10,6 +10,11 @@ import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { SessionService } from './session.service';
 import { SessionDeleteDialogComponent } from './session-delete-dialog.component';
 import { MessengerService } from 'app/shared/util/messenger-service';
+import { SessionParticipationService } from 'app/entities/session-participation/session-participation.service';
+import { ISessionParticipation, SessionParticipation} from 'app/shared/model/session-participation.model';
+import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { Account } from 'app/core/user/account.model';
 
 @Component({
   selector: 'jhi-session',
@@ -31,7 +36,8 @@ export class SessionComponent implements OnInit, OnDestroy {
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     protected parseLinks: JhiParseLinks,
-    protected messengerService: MessengerService
+    protected messengerService: MessengerService,
+    protected participationService: SessionParticipationService
   ) {
     this.sessions = [];
     this.itemsPerPage = ITEMS_PER_PAGE;
@@ -97,6 +103,34 @@ export class SessionComponent implements OnInit, OnDestroy {
       result.push('id');
     }
     return result;
+  }
+  private createParticipationFromForm(sessId: string | undefined): ISessionParticipation | null {
+    const acct : Account | null = this.messengerService.getAccount();
+    let returnObj : ISessionParticipation | null = null;
+    if (acct) {
+      returnObj = {
+        ...new SessionParticipation(),
+        sessionId: sessId,
+        userName: acct.firstName + ' ' +acct.lastName,
+        userEmail: acct.email,
+        registrationDateTime: moment(),
+        userId: acct.login
+      };
+    }
+    return returnObj;
+  }
+
+  registerForSession(session: ISession): void {
+    const partObj = this.createParticipationFromForm(session.id);
+    if(partObj)
+      this.subscribeToSaveResponse(this.participationService.create(partObj));
+  }
+
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<ISessionParticipation>>): void {
+    result.subscribe(
+      () => {},
+      () => {}
+    );
   }
 
   protected paginateSessions(data: ISession[] | null, headers: HttpHeaders): void {

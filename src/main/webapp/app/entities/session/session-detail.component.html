@@ -3,7 +3,7 @@
         <div *ngIf="session">
             <h2>{{ session.topic }}</h2>
             <h5>{{ session.sessionDateTime | date:'medium' }} {{session.sessionComplete ? '| Completed' : ''}}</h5>
-
+            <br>
             <jhi-alert-error></jhi-alert-error>
 
             <mat-tab-group>

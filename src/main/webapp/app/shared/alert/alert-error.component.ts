@@ -8,7 +8,7 @@ import { AlertError } from './alert-error.model';
 @Component({
   selector: 'jhi-alert-error',
   template: `
-    <div class="alerts" role="alert">
+    <div class="alerts col-md-7" role="alert">
       <div *ngFor="let alert of alerts" [ngClass]="setClasses(alert)">
         <ngb-alert *ngIf="alert && alert.type && alert.msg" [type]="alert.type" (close)="alert.close(alerts)">
           <pre [innerHTML]="alert.msg"></pre>
