@@ -1,67 +1,62 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ISessionParticipation } from 'app/shared/model/session-participation.model';
-
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { SessionParticipationService } from './session-participation.service';
+import { SessionService } from 'app/entities/session/session.service';
+import { MessengerService } from 'app/shared/util/messenger-service';
+
+import { ISession, Session } from 'app/shared/model/session.model';
+import { ISessionParticipation, SessionParticipation } from 'app/shared/model/session-participation.model';
+import * as moment from 'moment';
+import { Account } from 'app/core/user/account.model';
+
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'jhi-session-participation',
-  templateUrl: './session-participation.component.html'
+  templateUrl: './session-participation.component.html',
+  styleUrls: ['./session-participation.component.scss']
 })
 export class SessionParticipationComponent implements OnInit, OnDestroy {
-  sessionParticipations: ISessionParticipation[];
   eventSubscriber?: Subscription;
-  itemsPerPage: number;
   links: any;
-  page: number;
-  predicate: string;
-  ascending: boolean;
+
+  sessionId: string | null;
+  session: ISession = new Session();
+  sessionLoadError = false;
+  participationRecorded = false;
 
   constructor(
+    protected sessionService: SessionService,
+    protected messengerService: MessengerService,
     protected sessionParticipationService: SessionParticipationService,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    protected parseLinks: JhiParseLinks
+    protected parseLinks: JhiParseLinks,
+    protected route: ActivatedRoute
   ) {
-    this.sessionParticipations = [];
-    this.itemsPerPage = ITEMS_PER_PAGE;
-    this.page = 0;
-    this.links = {
-      last: 0
-    };
-    this.predicate = 'id';
-    this.ascending = true;
+    this.sessionId = this.getUrlParam("q");
   }
 
   loadAll(): void {
-    this.sessionParticipationService
+    this.sessionService
       .query({
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.sort()
+        id: this.sessionId
       })
-      .subscribe((res: HttpResponse<ISessionParticipation[]>) => this.paginateSessionParticipations(res.body, res.headers));
-  }
-
-  reset(): void {
-    this.page = 0;
-    this.sessionParticipations = [];
-    this.loadAll();
-  }
-
-  loadPage(page: number): void {
-    this.page = page;
-    this.loadAll();
+      .subscribe((res: HttpResponse<ISession[]>) => {
+        if ( res && res.body && res.body.length > 0) {
+          this.session = res.body[0];
+          this.registerSessionParticipation(this.session);
+        } else
+          this.sessionLoadError = true;
+      });
   }
 
   ngOnInit(): void {
     this.loadAll();
-    this.registerChangeInSessionParticipations();
   }
 
   ngOnDestroy(): void {
@@ -70,33 +65,32 @@ export class SessionParticipationComponent implements OnInit, OnDestroy {
     }
   }
 
-  trackId(index: number, item: ISessionParticipation): string {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    return item.id!;
+  registerSessionParticipation(session: ISession): void {
+    const partObj = this.createParticipation(session.id);
+    if(partObj)
+      this.sessionParticipationService.createOrUpdate(partObj).subscribe(() => {
+        this.participationRecorded = true;
+      });
   }
 
-  registerChangeInSessionParticipations(): void {
-    this.eventSubscriber = this.eventManager.subscribe('sessionParticipationListModification', () => this.reset());
-  }
-
-  delete(): void {
-  }
-
-  sort(): string[] {
-    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
-    if (this.predicate !== 'id') {
-      result.push('id');
+  private createParticipation(sessId: string | undefined): ISessionParticipation | null {
+    const acct : Account | null = this.messengerService.getAccount();
+    let returnObj : ISessionParticipation | null = null;
+    if (acct) {
+      returnObj = {
+        ...new SessionParticipation(),
+        sessionId: sessId,
+        userName: acct.firstName + ' ' +acct.lastName,
+        userEmail: acct.email,
+        attendanceDateTime: moment(),
+        userId: acct.login
+      };
     }
-    return result;
+    return returnObj;
   }
-  
-  protected paginateSessionParticipations(data: ISessionParticipation[] | null, headers: HttpHeaders): void {
-    const headersLink = headers.get('link');
-    this.links = this.parseLinks.parse(headersLink ? headersLink : '');
-    if (data) {
-      for (let i = 0; i < data.length; i++) {
-        this.sessionParticipations.push(data[i]);
-      }
-    }
+
+  private getUrlParam(param: string) : string | null {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
   }
 }

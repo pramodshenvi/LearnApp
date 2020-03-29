@@ -57,31 +57,10 @@ public class SessionParticipationResource {
         if (sessionParticipationDTO.getId() != null) {
             throw new BadRequestAlertException("A new sessionParticipation cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        SessionParticipationDTO result = sessionParticipationService.save(SessionParticipationService.CREATE, sessionParticipationDTO);
+        SessionParticipationDTO result = sessionParticipationService.save(sessionParticipationDTO);
         return ResponseEntity.created(new URI("/api/session-participations/" + result.getId()))
             .headers(null)
             .body(result);
-    }
-
-    /**
-     * {@code PUT  /session-participations} : Updates an existing sessionParticipation.
-     *
-     * @param sessionParticipationDTO the sessionParticipationDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated sessionParticipationDTO,
-     * or with status {@code 400 (Bad Request)} if the sessionParticipationDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the sessionParticipationDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PutMapping("/session-participations")
-    public ResponseEntity<SessionParticipationDTO> updateSessionParticipation(@Valid @RequestBody SessionParticipationDTO sessionParticipationDTO) throws URISyntaxException {
-        log.debug("REST request to update SessionParticipation : {}", sessionParticipationDTO);
-        if (sessionParticipationDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        SessionParticipationDTO result = sessionParticipationService.save(SessionParticipationService.UPDATE, sessionParticipationDTO);
-        return ResponseEntity.ok()
-        .headers(null)
-        .body(result);
     }
 
     /**

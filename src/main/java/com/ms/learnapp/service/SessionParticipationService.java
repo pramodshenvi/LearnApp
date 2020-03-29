@@ -31,10 +31,6 @@ public class SessionParticipationService {
 
     private final SessionParticipationMapper sessionParticipationMapper;
 
-    public static final String CREATE = "create";
-    public static final String UPDATE = "update";
-
-
     public SessionParticipationService(SessionParticipationRepository sessionParticipationRepository, SessionParticipationMapper sessionParticipationMapper) {
         this.sessionParticipationRepository = sessionParticipationRepository;
         this.sessionParticipationMapper = sessionParticipationMapper;
@@ -46,17 +42,18 @@ public class SessionParticipationService {
      * @param sessionParticipationDTO the entity to save.
      * @return the persisted entity.
      */
-    public SessionParticipationDTO save(String createUpdateFlag, SessionParticipationDTO sessionParticipationDTO) {
+    public SessionParticipationDTO save(SessionParticipationDTO sessionParticipationDTO) {
         log.debug("Request to save SessionParticipation : {}", sessionParticipationDTO);
         SessionParticipation sessionParticipation = sessionParticipationMapper.toEntity(sessionParticipationDTO);
-        boolean save = true;
-        if(createUpdateFlag.equals(CREATE)) {
-            List<SessionParticipationDTO> matchingSessions = findMatchingSessionParticipationsForUser(sessionParticipationDTO);
-            if(matchingSessions != null && matchingSessions.size() > 0)
-                save = false;
+        List<SessionParticipationDTO> matchingSessions = findMatchingSessionParticipationsForUser(sessionParticipationDTO);
+        if(matchingSessions != null && matchingSessions.size() > 0) {
+            sessionParticipation.setId(matchingSessions.get(0).getId());
+            if(matchingSessions.get(0).getRegistrationDateTime() != null)
+                sessionParticipation.setRegistrationDateTime(matchingSessions.get(0).getRegistrationDateTime());
+            if(matchingSessions.get(0).getAttendanceDateTime() != null)
+                sessionParticipation.setAttendanceDateTime(matchingSessions.get(0).getAttendanceDateTime());
         }
-        if(save)
-            sessionParticipation = sessionParticipationRepository.save(sessionParticipation);
+        sessionParticipation = sessionParticipationRepository.save(sessionParticipation);
         return sessionParticipationMapper.toDto(sessionParticipation);
     }
 

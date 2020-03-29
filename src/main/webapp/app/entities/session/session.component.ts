@@ -108,7 +108,7 @@ export class SessionComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  private createParticipationFromForm(sessId: string | undefined): ISessionParticipation | null {
+  private createParticipation(sessId: string | undefined): ISessionParticipation | null {
     const acct : Account | null = this.messengerService.getAccount();
     let returnObj : ISessionParticipation | null = null;
     if (acct) {
@@ -125,9 +125,9 @@ export class SessionComponent implements OnInit, OnDestroy {
   }
 
   registerForSession(session: ISession): void {
-    const partObj = this.createParticipationFromForm(session.id);
+    const partObj = this.createParticipation(session.id);
     if(partObj)
-      this.participationService.create(partObj).subscribe(() => {
+      this.participationService.createOrUpdate(partObj).subscribe(() => {
         this.getSessionParticipationDetails(this.sessions);
       });
   }
@@ -165,9 +165,8 @@ export class SessionComponent implements OnInit, OnDestroy {
       this.participationService.getMatchingSessionParticipationsForUser(participationObj)
       .subscribe((res: HttpResponse<ISessionParticipation[]>) => {
         const partDetails = res.body;
-        if (!partDetails || partDetails.length === 0) {
-          this.sessionParticipationDetails = {};
-        } else {
+        this.sessionParticipationDetails = {};
+        if (partDetails && partDetails.length > 0) {
           for (let i = 0; i < partDetails.length; i++) {
             const sessionId: string | undefined = partDetails[i].sessionId;
             if(sessionId) {

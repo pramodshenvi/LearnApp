@@ -18,17 +18,10 @@ export class SessionParticipationService {
 
   constructor(protected http: HttpClient) {}
 
-  create(sessionParticipation: ISessionParticipation): Observable<EntityResponseType> {
+  createOrUpdate(sessionParticipation: ISessionParticipation): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(sessionParticipation);
     return this.http
       .post<ISessionParticipation>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
-  }
-
-  update(sessionParticipation: ISessionParticipation): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(sessionParticipation);
-    return this.http
-      .put<ISessionParticipation>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 

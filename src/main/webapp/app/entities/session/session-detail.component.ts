@@ -30,7 +30,7 @@ export class SessionDetailComponent implements OnInit {
       this.router.navigate(["/course"])
     this.activatedRoute.data.subscribe(({ session }) => {
       this.session = session;
-      const qrCodeUrl = window.location.origin+'/participant.html?q='+escape(session.id);
+      const qrCodeUrl = window.location.origin+'/participant?q='+escape(session.id);
       this.sessionQRUrl = 'https://chart.googleapis.com/chart?cht=qr&chl='+qrCodeUrl+'&chs=400x400&choe=UTF-8&chld=L|2'
     });
   }

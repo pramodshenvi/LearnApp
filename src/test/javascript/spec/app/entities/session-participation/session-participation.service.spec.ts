@@ -62,7 +62,7 @@ describe('Service Tests', () => {
           returnedFromService
         );
 
-        service.create(new SessionParticipation()).subscribe(resp => (expectedResult = resp.body));
+        service.createOrUpdate(new SessionParticipation()).subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'POST' });
         req.flush(returnedFromService);
@@ -90,7 +90,7 @@ describe('Service Tests', () => {
           returnedFromService
         );
 
-        service.update(expected).subscribe(resp => (expectedResult = resp.body));
+        service.createOrUpdate(expected).subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'PUT' });
         req.flush(returnedFromService);
