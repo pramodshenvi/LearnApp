@@ -13,7 +13,6 @@ import { MessengerService } from 'app/shared/util/messenger-service';
 import { SessionParticipationService } from 'app/entities/session-participation/session-participation.service';
 import { ISessionParticipation, SessionParticipation} from 'app/shared/model/session-participation.model';
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
 import { Account } from 'app/core/user/account.model';
 
 @Component({
@@ -23,6 +22,7 @@ import { Account } from 'app/core/user/account.model';
 })
 export class SessionComponent implements OnInit, OnDestroy {
   sessions: ISession[];
+  sessionParticipationDetails: any = {};
   eventSubscriber?: Subscription;
   itemsPerPage: number;
   links: any;
@@ -57,7 +57,10 @@ export class SessionComponent implements OnInit, OnDestroy {
         sort: this.sort(),
         courseId: this.courseDetails.id
       })
-      .subscribe((res: HttpResponse<ISession[]>) => this.paginateSessions(res.body, res.headers));
+      .subscribe((res: HttpResponse<ISession[]>) => {
+        this.paginateSessions(res.body, res.headers);
+        this.getSessionParticipationDetails(res.body);
+      });
   }
 
   reset(): void {
@@ -104,6 +107,7 @@ export class SessionComponent implements OnInit, OnDestroy {
     }
     return result;
   }
+
   private createParticipationFromForm(sessId: string | undefined): ISessionParticipation | null {
     const acct : Account | null = this.messengerService.getAccount();
     let returnObj : ISessionParticipation | null = null;
@@ -123,14 +127,15 @@ export class SessionComponent implements OnInit, OnDestroy {
   registerForSession(session: ISession): void {
     const partObj = this.createParticipationFromForm(session.id);
     if(partObj)
-      this.subscribeToSaveResponse(this.participationService.create(partObj));
+      this.participationService.create(partObj).subscribe(() => {
+        this.getSessionParticipationDetails(this.sessions);
+      });
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<ISessionParticipation>>): void {
-    result.subscribe(
-      () => {},
-      () => {}
-    );
+  unRegisterFromSession(sessionParticipation: any): void {
+    this.participationService.delete(sessionParticipation.id).subscribe(() => {
+      this.getSessionParticipationDetails(this.sessions);
+    });
   }
 
   protected paginateSessions(data: ISession[] | null, headers: HttpHeaders): void {
@@ -140,6 +145,40 @@ export class SessionComponent implements OnInit, OnDestroy {
       for (let i = 0; i < data.length; i++) {
         this.sessions.push(data[i]);
       }
+    }
+  }
+
+  protected getSessionParticipationDetails(data: ISession[] | null): void {
+    const acct : Account | null = this.messengerService.getAccount();
+    let sessionIds = "";
+    if (data && acct) {
+      for (let i = 0; i < data.length; i++) {
+        sessionIds+=data[i].id;
+        if(i<data.length-1)
+          sessionIds+=",";
+      }
+      const participationObj = {
+        ...new SessionParticipation(),
+        sessionId: sessionIds,
+        userId: acct.login
+      };
+      this.participationService.getMatchingSessionParticipationsForUser(participationObj)
+      .subscribe((res: HttpResponse<ISessionParticipation[]>) => {
+        const partDetails = res.body;
+        if (!partDetails || partDetails.length === 0) {
+          this.sessionParticipationDetails = {};
+        } else {
+          for (let i = 0; i < partDetails.length; i++) {
+            const sessionId: string | undefined = partDetails[i].sessionId;
+            if(sessionId) {
+              this.sessionParticipationDetails[sessionId]= {
+                registrationDateTime: partDetails[i].registrationDateTime,
+                id: partDetails[i].id
+              };
+            }
+          }
+        }
+      });
     }
   }
 }

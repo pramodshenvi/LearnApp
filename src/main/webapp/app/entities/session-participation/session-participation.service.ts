@@ -14,6 +14,7 @@ type EntityArrayResponseType = HttpResponse<ISessionParticipation[]>;
 @Injectable({ providedIn: 'root' })
 export class SessionParticipationService {
   public resourceUrl = SERVER_API_URL + 'api/session-participations';
+  public userSessionParticipationsUrl = SERVER_API_URL + 'api/user-session-participations';
 
   constructor(protected http: HttpClient) {}
 
@@ -46,6 +47,13 @@ export class SessionParticipationService {
 
   delete(id: string): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  getMatchingSessionParticipationsForUser(sessionParticipation: ISessionParticipation): Observable<EntityArrayResponseType> {
+    const copy = this.convertDateFromClient(sessionParticipation);
+    return this.http
+      .post<ISessionParticipation[]>(this.userSessionParticipationsUrl, copy, { observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   protected convertDateFromClient(sessionParticipation: ISessionParticipation): ISessionParticipation {

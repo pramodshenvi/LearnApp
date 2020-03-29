@@ -48,7 +48,7 @@
 }
 
 .sessionEntity .sessionButtons {
-  margin-top: 15px;
+  margin: 15px -15px;
 }
 
 .sessionCourse a:hover {
@@ -125,4 +125,13 @@
 
 ::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
   width: 50%!important;
+}
+
+.sessionRegistered {
+  text-align: right;
+  color: #58a365;
+  font-size: 14px;
+  margin-bottom: 15px;
+  margin-top: -5px;
+  font-weight: 600;
 }

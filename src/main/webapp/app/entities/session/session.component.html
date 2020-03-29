@@ -13,6 +13,9 @@
 
     <div id="entities" *ngIf="sessions?.length > 0">
         <div class="sessionEntity row" *ngFor="let session of sessions ;trackBy: trackId">
+            <div *ngIf="sessionParticipationDetails[session.id]" class="col-sm-12 sessionRegistered">
+                <fa-icon icon="user-check"></fa-icon>&nbsp;&nbsp;&nbsp;You have registered for this session on {{ sessionParticipationDetails[session.id].registrationDateTime | date:'mediumDate' }}
+            </div>
             <div class="sessionDetailsContainer col-sm-12 col-md-6">
                 <div class="sessionName"><a [routerLink]="['/course/session', session.id, 'view']">{{ session.topic }}</a></div>
                 <div class="sessionAgenda">{{ session.agenda }}</div>
@@ -26,18 +29,25 @@
                 <div class="col-sm-6 col-md-6">
                     <div class="sessionButtons float-right">
                         <button type="submit"
+                                (click)="unRegisterFromSession(sessionParticipationDetails[session.id])"
+                                class="btn btn-danger btn-sm"
+                                *ngIf="!session.sessionComplete && sessionParticipationDetails[session.id]">
+                            <fa-icon icon="calendar-alt"></fa-icon>
+                            <span class="d-none d-md-inline">&nbsp;Un-register</span>
+                        </button>
+                        <button type="submit"
                                 (click)="registerForSession(session)"
                                 class="btn btn-info btn-sm"
-                                *ngIf="!session.sessionComplete">
+                                *ngIf="!session.sessionComplete && !sessionParticipationDetails[session.id]">
                             <fa-icon icon="calendar-alt"></fa-icon>
-                            <span class="d-none d-md-inline">&nbsp;&nbsp;Register</span>
+                            <span class="d-none d-md-inline">&nbsp;Register</span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/course/session', session.id, 'view']"
                                 class="btn btn-primary btn-sm"
-                                *ngIf="!session.sessionComplete">
+                                *ngIf="!session.sessionComplete && !sessionParticipationDetails[session.id]">
                             <fa-icon icon="user-tie"></fa-icon>
-                            <span class="d-none d-md-inline">&nbsp;&nbsp;I am SME!</span>
+                            <span class="d-none d-md-inline">&nbsp;I am SME!</span>
                         </button>
                         <div *ngIf="session.sessionComplete">Session Completed!</div>
                     </div>

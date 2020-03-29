@@ -57,7 +57,7 @@ public class SessionParticipationResource {
         if (sessionParticipationDTO.getId() != null) {
             throw new BadRequestAlertException("A new sessionParticipation cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        SessionParticipationDTO result = sessionParticipationService.save(sessionParticipationDTO);
+        SessionParticipationDTO result = sessionParticipationService.save(SessionParticipationService.CREATE, sessionParticipationDTO);
         return ResponseEntity.created(new URI("/api/session-participations/" + result.getId()))
             .headers(null)
             .body(result);
@@ -78,7 +78,7 @@ public class SessionParticipationResource {
         if (sessionParticipationDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        SessionParticipationDTO result = sessionParticipationService.save(sessionParticipationDTO);
+        SessionParticipationDTO result = sessionParticipationService.save(SessionParticipationService.UPDATE, sessionParticipationDTO);
         return ResponseEntity.ok()
         .headers(null)
         .body(result);
@@ -96,6 +96,19 @@ public class SessionParticipationResource {
         Page<SessionParticipationDTO> page = sessionParticipationService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code POST  /session-participations} : Get matching Session Participations for a given user.
+     *
+     * @param sessionParticipationDTO the sessionParticipationDTO to create.
+     * @return a list of {@link SessionParticipationDTO} 
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/user-session-participations")
+    public List<SessionParticipationDTO> getMatchingSessionParticipationsForUser(@RequestBody SessionParticipationDTO sessionParticipationDTO) throws URISyntaxException {
+        log.debug("REST request to get a page of SessionParticipations");
+        return sessionParticipationService.findMatchingSessionParticipationsForUser(sessionParticipationDTO);
     }
 
     /**
