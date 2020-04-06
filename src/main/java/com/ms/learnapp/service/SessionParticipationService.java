@@ -63,8 +63,13 @@ public class SessionParticipationService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    public Page<SessionParticipationDTO> findAll(Pageable pageable) {
+    public Page<SessionParticipationDTO> findAll(SessionParticipationDTO dto, Pageable pageable) {
         log.debug("Request to get all SessionParticipations");
+        if(dto != null){
+            ExampleMatcher m = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING);
+            return sessionParticipationRepository.findAll(Example.of(sessionParticipationMapper.toEntity(dto),m), pageable)
+            .map(sessionParticipationMapper::toDto);
+        }
         return sessionParticipationRepository.findAll(pageable)
             .map(sessionParticipationMapper::toDto);
     }

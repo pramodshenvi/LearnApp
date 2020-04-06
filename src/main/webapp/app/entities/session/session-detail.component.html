@@ -92,10 +92,10 @@
                                         <fa-icon icon="print"></fa-icon>&nbsp;&nbsp;&nbsp;Print
                                     </a>
                                 </div>
-                                <div class="attendeeDownloadBtn" (click)="downloadAttendeeList()" *ngIf="session.sessionComplete"><fa-icon icon="users"></fa-icon>&nbsp;&nbsp;Download Attendee Report</div>
                             </div>
                         </div>
                     </div>
+                    <jhi-session-attendance [session]=session></jhi-session-attendance>
                 </mat-tab>
             </mat-tab-group>
 

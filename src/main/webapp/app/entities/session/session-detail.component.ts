@@ -60,8 +60,4 @@ export class SessionDetailComponent implements OnInit {
     const modalRef = this.modalService.open(SessionMarkCompleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.session = session;
   }
-
-  downloadAttendeeList(): void {
-    /* ToDo complete this */
-  }
 }
