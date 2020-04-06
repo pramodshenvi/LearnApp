@@ -14,6 +14,7 @@ import {MatTableDataSource} from '@angular/material/table';
 export class SessionAttendanceComponent implements OnInit {
   @Input() session: any;
   dataSource: MatTableDataSource<ISessionParticipation> | null = null;
+  sessionParticipationList: ISessionParticipation[] = [];
   displayedColumns: string[] = ['name', 'email', 'registrationDateTime', 'attendanceDateTime'];
 
   constructor(
@@ -27,7 +28,8 @@ export class SessionAttendanceComponent implements OnInit {
         })
         .subscribe((res: HttpResponse<ISessionParticipation[]>) => {
           if(res && res.body) {
-            this.dataSource = new MatTableDataSource(res.body);
+            this.sessionParticipationList = res.body;
+            this.dataSource = new MatTableDataSource(this.sessionParticipationList);
           }
         });
     }
@@ -40,6 +42,28 @@ export class SessionAttendanceComponent implements OnInit {
   }
 
   downloadAttendeeList(): void {
-    /* ToDo complete this */
+    if(this.sessionParticipationList) {
+      const items = this.sessionParticipationList;
+      const replacer = (key: any, value: any) => value === null ? '' : value;
+      const header = ['userName', 'userEmail', 'registrationDateTime', 'attendanceDateTime'];
+      const displayHeader = ['User Name','E-Mail Address','Registration Time','Attendance Time'];
+      let csv = items.map((row: any) => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','));
+      csv.unshift(displayHeader.join(','))
+      csv.unshift('');
+      csv.unshift(this.session.sessionDateTime);
+      csv.unshift(this.session.topic);
+      csv = [csv.join('\r\n')]
+
+      const a = document.createElement("a");
+      a.setAttribute('style', 'display:none;');
+      document.body.appendChild(a);
+      const blob = new Blob(csv, { type: 'text/csv' });
+      const url= window.URL.createObjectURL(blob);
+      a.href = url;
+      const link:string ="Attendence_Report_" + this.session.topic.replace(/[^a-zA-Z0-9\s]/g,'').replace(/\s/g,'_') + '.csv';
+      a.download = link.toLocaleLowerCase();
+      a.click();
+    }
+
   }
 }

@@ -1,6 +1,6 @@
 <div *ngIf="session.sessionComplete">
     <div class="col-12">
-        <div *ngIf="dataSource && dataSource.data && dataSource.data.length > 0">
+        <div *ngIf="sessionParticipationList && sessionParticipationList.length > 0">
             <h3>
                 Participants
                 <div class="float-right participantDownload" (click)="downloadAttendeeList()"><fa-icon icon="file-excel"></fa-icon></div>
