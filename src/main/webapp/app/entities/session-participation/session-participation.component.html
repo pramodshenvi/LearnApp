@@ -12,7 +12,12 @@
     <div class="sessionDetails">
         <div class="col-sm-12">{{ session.sessionDateTime | date:'medium' }}</div>
         <div class="col-sm-12">{{ session.location}}</div>
-        <div class="col-sm-12">{{ session.assignedSMEs}}</div>
+        <div class="col-sm-12 hostedBy">Hosted By</div>
+        <div *ngIf="session.assignedSMEs && session.assignedSMEs.length > 0">
+            <div class="listItem" *ngFor="let sme of session.assignedSMEs">
+                <fa-icon icon="user-tie"></fa-icon>&nbsp;&nbsp;{{sme.split('|')[0]}}
+            </div>
+        </div>
     </div>
     <br>
     <div class="alert alert-success participationSuccess" id="no-result" *ngIf="participationRecorded">

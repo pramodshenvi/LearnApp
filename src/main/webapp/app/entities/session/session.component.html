@@ -19,7 +19,7 @@
             <div class="sessionDetailsContainer col-sm-12 col-md-6">
                 <div class="sessionName"><a [routerLink]="['/course/session', session.id, 'view']">{{ session.topic }}</a></div>
                 <div class="sessionAgenda">{{ session.agenda }}</div>
-                <div *ngIf="session.assignedSMEs" class="sessionSMEs">Hosted By: {{ session.assignedSMEs }}</div>
+                <div *ngIf="session.assignedSMEs" class="sessionSMEs">Hosted By: <span *ngFor="let sme of session.assignedSMEs; let i = index">{{sme.split('|')[0]}}<span *ngIf="i < session.assignedSMEs.length-1">, </span></span></div>
             </div>
             <div class="sessionLocationButtonContainer col-sm-12 col-md-6 row">
                 <div class="col-sm-6 col-md-6">
@@ -41,13 +41,6 @@
                                 *ngIf="!session.sessionComplete && (!sessionParticipationDetails[session.id] || !sessionParticipationDetails[session.id].registrationDateTime)">
                             <fa-icon icon="calendar-alt"></fa-icon>
                             <span class="d-none d-md-inline">&nbsp;Register</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/course/session', session.id, 'view']"
-                                class="btn btn-primary btn-sm"
-                                *ngIf="!session.sessionComplete && (!sessionParticipationDetails[session.id] || !sessionParticipationDetails[session.id].registrationDateTime)">
-                            <fa-icon icon="user-tie"></fa-icon>
-                            <span class="d-none d-md-inline">&nbsp;I am SME!</span>
                         </button>
                         <div *ngIf="session.sessionComplete">Session Completed!</div>
                     </div>

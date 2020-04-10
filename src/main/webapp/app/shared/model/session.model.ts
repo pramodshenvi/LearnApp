@@ -11,7 +11,7 @@ export interface ISession {
   sessionComplete?: boolean;
   location?: SessionLocation;
   sessionPreRequisites?: string;
-  assignedSMEs?: string;
+  assignedSMEs?: string[];
   attendanceLocation?: AttendanceLocationTypes;
 }
 
@@ -25,7 +25,7 @@ export class Session implements ISession {
     public sessionComplete?: boolean,
     public location?: SessionLocation,
     public sessionPreRequisites?: string,
-    public assignedSMEs?: string,
+    public assignedSMEs?: string[],
     public attendanceLocation?: AttendanceLocationTypes
   ) {}
 }

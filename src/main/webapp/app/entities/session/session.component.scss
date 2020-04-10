@@ -140,7 +140,7 @@
   width: 100%;
 }
 
-.mat-form-field {
+::ng-deep.mat-form-field {
   font-size: 14px;
   width: 100%;
 }
@@ -148,4 +148,9 @@
 .participantDownload {
   color: #057c05;
   cursor: pointer;
+}
+
+.listItem {
+  margin: 5px auto auto 20px;
+  font-size: 16px;
 }

@@ -261,7 +261,14 @@ public class UserService {
 
     public List<UserDTO> findMatchingUsersWithFirstOrLastNameContaining(String userName) {
         log.debug("Request to get all matching users");
-        String userIdList = "^"+ String.join("|^", userName.split("\\s+"));
+        String[] userIdSplit = userName.split("\\s+");
+        if(userIdSplit != null && userIdSplit.length == 2) {
+            return userRepository.findMatchByFirstNameAndLastNameContaining("^"+userIdSplit[0], "^"+userIdSplit[1])
+            .stream()
+            .map(UserDTO::new)
+            .collect(Collectors.toCollection(LinkedList::new));
+        }
+        String userIdList = "^"+ String.join("|^", userIdSplit);
         return userRepository.findAllByFirstNameOrLastNameContaining(userIdList)
         .stream()
         .map(UserDTO::new)

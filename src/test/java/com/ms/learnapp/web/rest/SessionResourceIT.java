@@ -20,11 +20,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.Validator;
 
-
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.ZoneOffset;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.ms.learnapp.web.rest.TestUtil.sameInstant;
@@ -57,8 +57,8 @@ public class SessionResourceIT {
     private static final String DEFAULT_SESSION_PRE_REQUISITES = "AAAAAAAAAA";
     private static final String UPDATED_SESSION_PRE_REQUISITES = "BBBBBBBBBB";
 
-    private static final String DEFAULT_ASSIGNED_SM_ES = "AAAAAAAAAA";
-    private static final String UPDATED_ASSIGNED_SM_ES = "BBBBBBBBBB";
+    private static final String DEFAULT_ASSIGNED_SM_ES = Arrays.asList(new String[]{"AAAAAAAAAA"});
+    private static final String UPDATED_ASSIGNED_SM_ES = Arrays.asList(new String[]{"BBBBBBBBBB"});
 
     private static final AttendanceLocationTypes DEFAULT_ATTENDANCE_LOCATION = AttendanceLocationTypes.CLASSROOM;
     private static final AttendanceLocationTypes UPDATED_ATTENDANCE_LOCATION = AttendanceLocationTypes.REMOTE;

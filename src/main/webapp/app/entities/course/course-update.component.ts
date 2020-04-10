@@ -75,7 +75,7 @@ export class CourseUpdateComponent implements OnInit {
       id: course.id,
       courseName: course.courseName,
       smeSkills: course.smeSkills,
-      courseSMEs: course.courseSMEs,
+      courseSMEs: this.courseSMEs,
       preRequisites: course.preRequisites,
       smePoints: course.smePoints,
       participantPoints: course.participantPoints,

@@ -30,7 +30,11 @@
                                     </dd>
                                     <dt><span>Hosted By</span></dt>
                                     <dd>
-                                        <span>{{ session.assignedSMEs }}</span>
+                                        <div *ngIf="session.assignedSMEs && session.assignedSMEs.length > 0">
+                                            <div class="listItem" *ngFor="let sme of session.assignedSMEs">
+                                                <fa-icon icon="user-tie"></fa-icon>&nbsp;&nbsp;{{sme.split('|')[0]}}
+                                            </div>
+                                        </div>
                                     </dd>
                                 </dl>
                             </div>
@@ -57,12 +61,14 @@
                             </button>
                 
                             <button type="button"
+                                    *ngIf="!session.sessionComplete"
                                     [routerLink]="['/course/session', session.id, 'edit']"
                                     class="btn btn-primary">
                                 <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span class="d-none d-md-inline">Edit</span>
                             </button>
                 
                             <button type="submit" (click)="delete(session)"
+                                    *ngIf="!session.sessionComplete"
                                     class="btn btn-danger">
                                 <fa-icon icon="times"></fa-icon>&nbsp;<span class="d-none d-md-inline">Delete</span>
                             </button>

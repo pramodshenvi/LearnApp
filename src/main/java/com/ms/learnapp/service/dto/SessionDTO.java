@@ -3,6 +3,7 @@ package com.ms.learnapp.service.dto;
 import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import com.ms.learnapp.domain.enumeration.SessionLocation;
 import com.ms.learnapp.domain.enumeration.AttendanceLocationTypes;
@@ -32,7 +33,7 @@ public class SessionDTO implements Serializable {
 
     private String sessionPreRequisites;
 
-    private String assignedSMEs;
+    private List<String> assignedSMEs;
 
     private AttendanceLocationTypes attendanceLocation;
 
@@ -85,11 +86,11 @@ public class SessionDTO implements Serializable {
         this.sessionPreRequisites = sessionPreRequisites;
     }
 
-    public String getAssignedSMEs() {
+    public List<String> getAssignedSMEs() {
         return assignedSMEs;
     }
 
-    public void setAssignedSMEs(String assignedSMEs) {
+    public void setAssignedSMEs(List<String> assignedSMEs) {
         this.assignedSMEs = assignedSMEs;
     }
 

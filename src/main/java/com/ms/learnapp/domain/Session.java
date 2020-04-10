@@ -7,6 +7,7 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import com.ms.learnapp.domain.enumeration.SessionLocation;
 
@@ -48,8 +49,8 @@ public class Session implements Serializable {
     @Field("session_pre_requisites")
     private String sessionPreRequisites;
 
-    @Field("assigned_sm_es")
-    private String assignedSMEs;
+    @Field("assigned_smes")
+    private List<String> assignedSMEs;
 
     @Field("attendance_location")
     private AttendanceLocationTypes attendanceLocation;
@@ -128,16 +129,16 @@ public class Session implements Serializable {
         this.sessionPreRequisites = sessionPreRequisites;
     }
 
-    public String getAssignedSMEs() {
+    public List<String> getAssignedSMEs() {
         return assignedSMEs;
     }
 
-    public Session assignedSMEs(String assignedSMEs) {
+    public Session assignedSMEs(List<String> assignedSMEs) {
         this.assignedSMEs = assignedSMEs;
         return this;
     }
 
-    public void setAssignedSMEs(String assignedSMEs) {
+    public void setAssignedSMEs(List<String> assignedSMEs) {
         this.assignedSMEs = assignedSMEs;
     }
 

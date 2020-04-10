@@ -10,6 +10,7 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { ISession, Session } from 'app/shared/model/session.model';
 import { SessionService } from './session.service';
 import { MessengerService } from 'app/shared/util/messenger-service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'jhi-session-update',
@@ -18,6 +19,7 @@ import { MessengerService } from 'app/shared/util/messenger-service';
 export class SessionUpdateComponent implements OnInit {
   isSaving = false;
   courseDetails: any = {};
+  allowableSMEs: string[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -30,19 +32,23 @@ export class SessionUpdateComponent implements OnInit {
     attendanceLocation: []
   });
 
-  constructor(protected sessionService: SessionService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder, protected messengerService: MessengerService) {}
+  constructor(protected sessionService: SessionService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder, protected messengerService: MessengerService, protected router: Router) {}
 
   ngOnInit(): void {
     this.courseDetails = this.messengerService.getCourseDetails();
+    if(!this.courseDetails)
+      this.router.navigate(["/course"]);
+    else {
+      this.allowableSMEs = this.courseDetails.courseSMEs;
+      this.activatedRoute.data.subscribe(({ session }) => {
+        if (!session.id) {
+          const today = moment().startOf('day');
+          session.sessionDateTime = today;
+        }
 
-    this.activatedRoute.data.subscribe(({ session }) => {
-      if (!session.id) {
-        const today = moment().startOf('day');
-        session.sessionDateTime = today;
-      }
-
-      this.updateForm(session);
-    });
+        this.updateForm(session);
+      });
+    }
   }
   
   updateForm(session: ISession): void {
