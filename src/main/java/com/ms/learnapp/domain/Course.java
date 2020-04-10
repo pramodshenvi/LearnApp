@@ -27,6 +27,9 @@ public class Course implements Serializable {
     @Field("sme_skills")
     private List<String> smeSkills;
 
+    @Field("course_smes")
+    private List<String> courseSMEs;
+
     @Field("pre_requisites")
     private String preRequisites;
 
@@ -134,6 +137,7 @@ public class Course implements Serializable {
             "id=" + getId() +
             ", courseName='" + getCourseName() + "'" +
             ", smeSkills='" + getSmeSkills() + "'" +
+            ", courseSMEs='" + getCourseSMEs() + "'" +
             ", preRequisites='" + getPreRequisites() + "'" +
             ", smePoints=" + getSmePoints() +
             ", participantPoints=" + getParticipantPoints() +
@@ -156,4 +160,18 @@ public class Course implements Serializable {
     public void setParticipantPoints(Integer participantPoints) {
         this.participantPoints = participantPoints;
     }
+
+    public List<String> getCourseSMEs() {
+        return courseSMEs;
+    }
+
+    public void setCourseSMEs(List<String> courseSMEs) {
+        this.courseSMEs = courseSMEs;
+    }
+
+    public Course courseSMEs(List<String> courseSMEs) {
+        this.courseSMEs = courseSMEs;
+        return this;
+    }
+
 }

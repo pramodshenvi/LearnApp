@@ -151,6 +151,18 @@ public class UserResource {
     }
 
     /**
+     * {@code GET /users-matching-names} : get all users with maching names.
+     *
+     * @param names the pagination information.
+     * @return the {@link List<UserDTO>} with status {@code 200 (OK)} and with body all matching users.
+     */
+    @GetMapping("/users-matching-names")
+    public ResponseEntity<List<UserDTO>> getUsersWithNames(String userName) {
+        final List<UserDTO> userList = userService.findMatchingUsersWithFirstOrLastNameContaining(userName);
+        return new ResponseEntity<>(userList, null, HttpStatus.OK);
+    }
+
+    /**
      * Gets a list of all roles.
      * @return a string list of all roles.
      */

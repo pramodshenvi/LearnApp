@@ -19,6 +19,7 @@ import { SkillService } from 'app/entities/skill/skill.service';
 export class CourseUpdateComponent implements OnInit {
   isSaving = false;
   smeSkills: string[] = [];
+  courseSMEs: string[] = [];
   skillsDropdownList: ISkill[] = [];
   skillDropDownKeyboardAction: String | undefined;
 
@@ -37,6 +38,7 @@ export class CourseUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ course }) => {
       this.smeSkills = course.smeSkills;
+      this.courseSMEs = course.courseSMEs;
       this.updateForm(course);
     });
   }
@@ -73,6 +75,7 @@ export class CourseUpdateComponent implements OnInit {
       id: course.id,
       courseName: course.courseName,
       smeSkills: course.smeSkills,
+      courseSMEs: course.courseSMEs,
       preRequisites: course.preRequisites,
       smePoints: course.smePoints,
       participantPoints: course.participantPoints,
@@ -100,6 +103,7 @@ export class CourseUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       courseName: this.editForm.get(['courseName'])!.value,
       smeSkills: this.smeSkills,
+      courseSMEs: this.courseSMEs,
       preRequisites: this.editForm.get(['preRequisites'])!.value,
       smePoints: this.editForm.get(['smePoints'])!.value,
       participantPoints: this.editForm.get(['participantPoints'])!.value,

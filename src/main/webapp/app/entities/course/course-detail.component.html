@@ -15,7 +15,9 @@
                     <dl class="row-md jh-entity-details">
                         <dt><span>SME Skills</span></dt>
                         <dd>
-                            <span>{{ course.smeSkills }}</span>
+                            <div class="listItem" *ngFor="let skill of course.smeSkills">
+                                <fa-icon icon="graduation-cap"></fa-icon>&nbsp;&nbsp;<span>{{ skill }}</span>
+                            </div>
                         </dd>
                         <dt><span>Pre Requisites</span></dt>
                         <dd>
@@ -28,6 +30,24 @@
                         <dt><span>Participant Points</span></dt>
                         <dd>
                             <span>{{ course.participantPoints }}</span>
+                        </dd>
+                        <dt>
+                            <span>SME</span>
+                            <button type="submit"
+                                    (click)="editSMEs(course)"
+                                    class="btn btn-info btn-sm float-right">
+                                <fa-icon icon="user-edit"></fa-icon>&nbsp;&nbsp;<span class="d-none d-md-inline">Edit SMEs</span>
+                            </button>
+                        </dt>
+                        <dd>
+                            <div *ngIf="course.courseSMEs && course.courseSMEs.length > 0">
+                                <div class="listItem" *ngFor="let sme of course.courseSMEs">
+                                    <fa-icon icon="user-tie"></fa-icon>&nbsp;&nbsp;{{sme.split('|')[0]}}
+                                </div>
+                            </div>
+                            <div *ngIf="!course.courseSMEs || course.courseSMEs.length === 0">
+                                No SMEs assigned for the course!
+                            </div>
                         </dd>
                     </dl>
                 </div>

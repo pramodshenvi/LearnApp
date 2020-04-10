@@ -6,6 +6,7 @@ import { CourseComponent } from './course.component';
 import { CourseDetailComponent } from './course-detail.component';
 import { CourseUpdateComponent } from './course-update.component';
 import { CourseDeleteDialogComponent } from './course-delete-dialog.component';
+import { CourseModifySMEDialogComponent } from './course-modify-sme-dialog.component'
 
 import { courseRoute } from './course.route';
 
@@ -16,7 +17,7 @@ import { SessionMarkCompleteDialogComponent } from 'app/entities/session/session
 
 @NgModule({
   imports: [LearnAppSharedModule, RouterModule.forChild(courseRoute)],
-  declarations: [CourseComponent, SessionComponent, SessionDeleteDialogComponent, SessionMarkCompleteDialogComponent, CourseDetailComponent, CourseUpdateComponent, CourseDeleteDialogComponent, DynamicDropdownComponent],
-  entryComponents: [CourseDeleteDialogComponent, SessionDeleteDialogComponent, SessionMarkCompleteDialogComponent]
+  declarations: [CourseComponent, SessionComponent, SessionDeleteDialogComponent, SessionMarkCompleteDialogComponent, CourseDetailComponent, CourseUpdateComponent, CourseDeleteDialogComponent, CourseModifySMEDialogComponent, DynamicDropdownComponent],
+  entryComponents: [CourseDeleteDialogComponent, CourseModifySMEDialogComponent, SessionDeleteDialogComponent, SessionMarkCompleteDialogComponent]
 })
 export class LearnAppCourseModule {}

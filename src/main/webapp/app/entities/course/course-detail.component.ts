@@ -5,6 +5,7 @@ import { ICourse } from 'app/shared/model/course.model';
 import { MessengerService } from 'app/shared/util/messenger-service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CourseDeleteDialogComponent } from './course-delete-dialog.component';
+import { CourseModifySMEDialogComponent } from './course-modify-sme-dialog.component'
 
 @Component({
   selector: 'jhi-course-detail',
@@ -27,6 +28,15 @@ export class CourseDetailComponent implements OnInit {
   delete(course: ICourse): void {
     const modalRef = this.modalService.open(CourseDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.course = course;
+  }
+
+  editSMEs(course: ICourse): void {
+    const modalRef = this.modalService.open(CourseModifySMEDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.course = course;
+    modalRef.result.then((result) => {
+      if (result)
+        this.course = result;
+    }).catch(()=>{});
   }
 
   previousState(): void {

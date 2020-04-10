@@ -1,0 +1,34 @@
+<form *ngIf="course" name="editSMEForm" [formGroup]="editForm">
+    <div class="modal-header">
+        <h4 class="modal-title">SME | {{course.courseName}}</h4>
+
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="cancel()">&times;</button>
+    </div>
+
+    <div class="form-group modal-body col-sm-12 col-md-8">
+        <label class="form-control-label" for="field_courseSMEs">Course SMEs</label>
+        <input type="text" class="form-control" name="courseSMEs" id="field_courseSMEs"
+                    formControlName="courseSME" (keyup)="loadMatchingUserNames($event)" autocomplete="off"/>
+        <jhi-dynamic-dropdown [keyboardAction]=userDropDownKeyboardAction [dropdownList]=courseSMEDropdownList (selectedValueEmitter)="onDropdownValueSelection($event);" ></jhi-dynamic-dropdown>
+        <div *ngIf="courseSMEList.length > 0">
+            <div class="" *ngFor="let sme of courseSMEList; let i=index">
+                <fa-icon icon="user-edit"></fa-icon>&nbsp;&nbsp;
+                <span class="smeSkillsValue">
+                    <span>{{sme}}</span>&nbsp;&nbsp;&nbsp;
+                    <fa-icon (click)="deleteCourseSME(i)" icon="times"></fa-icon>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button id="jhi-confirm-sme-edit" type="button" (click)="saveSMEList(course!)" class="btn btn-success">
+            <fa-icon icon="check"></fa-icon>&nbsp;<span>Save SMEs</span>
+        </button>
+    </div>
+</form>

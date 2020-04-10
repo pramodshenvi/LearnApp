@@ -9,6 +9,7 @@ import { IUser } from './user.model';
 @Injectable({ providedIn: 'root' })
 export class UserService {
   public resourceUrl = SERVER_API_URL + 'api/users';
+  public matchingUserUrl = SERVER_API_URL + 'api/users-matching-names';
 
   constructor(private http: HttpClient) {}
 
@@ -27,6 +28,11 @@ export class UserService {
   query(req?: Pagination): Observable<HttpResponse<IUser[]>> {
     const options = createRequestOption(req);
     return this.http.get<IUser[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  queryMatchingUsers(userName: string): Observable<HttpResponse<IUser[]>> {
+    const options = createRequestOption({userName});
+    return this.http.get<IUser[]>(this.matchingUserUrl, { params: options, observe: 'response' });
   }
 
   delete(login: string): Observable<{}> {

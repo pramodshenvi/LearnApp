@@ -18,6 +18,9 @@ public class CourseDTO implements Serializable {
     @NotNull
     private List<String> smeSkills;
 
+    @NotNull
+    private List<String> courseSMEs;
+
     private String preRequisites;
 
     @NotNull
@@ -95,6 +98,7 @@ public class CourseDTO implements Serializable {
             "id=" + getId() +
             ", courseName='" + getCourseName() + "'" +
             ", smeSkills='" + getSmeSkills() + "'" +
+            ", courseSMEs='" + getCourseSMEs() + "'" +
             ", preRequisites='" + getPreRequisites() + "'" +
             ", smePoints=" + getSmePoints() +
             ", participantPoints=" + getParticipantPoints() +
@@ -117,4 +121,13 @@ public class CourseDTO implements Serializable {
     public void setParticipantPoints(Integer participantPoints) {
         this.participantPoints = participantPoints;
     }
+
+    public List<String> getCourseSMEs() {
+        return courseSMEs;
+    }
+
+    public void setCourseSMEs(List<String> courseSMEs) {
+        this.courseSMEs = courseSMEs;
+    }
+
 }
