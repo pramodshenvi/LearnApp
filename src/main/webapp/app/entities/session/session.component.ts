@@ -108,13 +108,14 @@ export class SessionComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  private createParticipation(sessId: string | undefined): ISessionParticipation | null {
+  private createParticipation(sessId: string | undefined, cId: string | undefined): ISessionParticipation | null {
     const acct : Account | null = this.messengerService.getAccount();
     let returnObj : ISessionParticipation | null = null;
     if (acct) {
       returnObj = {
         ...new SessionParticipation(),
         sessionId: sessId,
+        courseId: cId,
         userName: acct.firstName + ' ' +acct.lastName,
         userEmail: acct.email,
         registrationDateTime: moment(),
@@ -125,7 +126,7 @@ export class SessionComponent implements OnInit, OnDestroy {
   }
 
   registerForSession(session: ISession): void {
-    const partObj = this.createParticipation(session.id);
+    const partObj = this.createParticipation(session.id, session.courseId);
     if(partObj)
       this.participationService.createOrUpdate(partObj).subscribe(() => {
         this.getSessionParticipationDetails(this.sessions);

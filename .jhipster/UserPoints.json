@@ -4,6 +4,13 @@
     "relationships": [],
     "fields": [
         {
+            "fieldName": "userId",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
             "fieldName": "sessionId",
             "fieldType": "String",
             "fieldValidateRules": [
@@ -11,37 +18,30 @@
             ]
         },
         {
-            "fieldName": "courseId",
+            "fieldName": "sessionTopic",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "userName",
-            "fieldType": "String",
+            "fieldName": "sessionDateTime",
+            "fieldType": "ZonedDateTime",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "userEmail",
-            "fieldType": "String",
+            "fieldName": "pointsFor",
+            "fieldType": "PointsFor",
+            "fieldValues": "HOST,PARTICIPANT",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "registrationDateTime",
-            "fieldType": "ZonedDateTime"
-        },
-        {
-            "fieldName": "attendanceDateTime",
-            "fieldType": "ZonedDateTime"
-        },
-        {
-            "fieldName": "userId",
-            "fieldType": "String",
+            "fieldName": "points",
+            "fieldType": "Integer",
             "fieldValidateRules": [
                 "required"
             ]
@@ -50,7 +50,7 @@
     "dto": "mapstruct",
     "searchEngine": false,
     "service": "serviceClass",
-    "entityTableName": "session_participation",
+    "entityTableName": "user_points",
     "databaseType": "mongodb",
     "readOnly": false,
     "jpaMetamodelFiltering": false,

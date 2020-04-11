@@ -66,20 +66,21 @@ export class SessionParticipationComponent implements OnInit, OnDestroy {
   }
 
   registerSessionParticipation(session: ISession): void {
-    const partObj = this.createParticipation(session.id);
+    const partObj = this.createParticipation(session.id, session.courseId);
     if(partObj)
       this.sessionParticipationService.createOrUpdate(partObj).subscribe(() => {
         this.participationRecorded = true;
       });
   }
 
-  private createParticipation(sessId: string | undefined): ISessionParticipation | null {
+  private createParticipation(sessId: string | undefined, cId: string | undefined): ISessionParticipation | null {
     const acct : Account | null = this.messengerService.getAccount();
     let returnObj : ISessionParticipation | null = null;
     if (acct) {
       returnObj = {
         ...new SessionParticipation(),
         sessionId: sessId,
+        courseId: cId,
         userName: acct.firstName + ' ' +acct.lastName,
         userEmail: acct.email,
         attendanceDateTime: moment(),

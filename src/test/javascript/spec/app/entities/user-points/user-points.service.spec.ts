@@ -2,16 +2,17 @@ import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { SessionParticipationService } from 'app/entities/session-participation/session-participation.service';
-import { ISessionParticipation, SessionParticipation } from 'app/shared/model/session-participation.model';
+import { UserPointsService } from 'app/entities/user-points/user-points.service';
+import { IUserPoints, UserPoints } from 'app/shared/model/user-points.model';
+import { PointsFor } from 'app/shared/model/enumerations/points-for.model';
 
 describe('Service Tests', () => {
-  describe('SessionParticipation Service', () => {
+  describe('UserPoints Service', () => {
     let injector: TestBed;
-    let service: SessionParticipationService;
+    let service: UserPointsService;
     let httpMock: HttpTestingController;
-    let elemDefault: ISessionParticipation;
-    let expectedResult: ISessionParticipation | ISessionParticipation[] | boolean | null;
+    let elemDefault: IUserPoints;
+    let expectedResult: IUserPoints | IUserPoints[] | boolean | null;
     let currentDate: moment.Moment;
 
     beforeEach(() => {
@@ -20,19 +21,18 @@ describe('Service Tests', () => {
       });
       expectedResult = null;
       injector = getTestBed();
-      service = injector.get(SessionParticipationService);
+      service = injector.get(UserPointsService);
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new SessionParticipation('ID', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', currentDate, currentDate, 'AAAAAAA');
+      elemDefault = new UserPoints('ID', 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', currentDate, PointsFor.HOST, 0);
     });
 
     describe('Service methods', () => {
       it('should find an element', () => {
         const returnedFromService = Object.assign(
           {
-            registrationDateTime: currentDate.format(DATE_TIME_FORMAT),
-            attendanceDateTime: currentDate.format(DATE_TIME_FORMAT)
+            sessionDateTime: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
@@ -44,76 +44,72 @@ describe('Service Tests', () => {
         expect(expectedResult).toMatchObject(elemDefault);
       });
 
-      it('should create a SessionParticipation', () => {
+      it('should create a UserPoints', () => {
         const returnedFromService = Object.assign(
           {
             id: 'ID',
-            registrationDateTime: currentDate.format(DATE_TIME_FORMAT),
-            attendanceDateTime: currentDate.format(DATE_TIME_FORMAT)
+            sessionDateTime: currentDate.format(DATE_TIME_FORMAT)
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            registrationDateTime: currentDate,
-            attendanceDateTime: currentDate
+            sessionDateTime: currentDate
           },
           returnedFromService
         );
 
-        service.createOrUpdate(new SessionParticipation()).subscribe(resp => (expectedResult = resp.body));
+        service.create(new UserPoints()).subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'POST' });
         req.flush(returnedFromService);
         expect(expectedResult).toMatchObject(expected);
       });
 
-      it('should update a SessionParticipation', () => {
+      it('should update a UserPoints', () => {
         const returnedFromService = Object.assign(
           {
+            userId: 'BBBBBB',
             sessionId: 'BBBBBB',
-            userName: 'BBBBBB',
-            userEmail: 'BBBBBB',
-            registrationDateTime: currentDate.format(DATE_TIME_FORMAT),
-            attendanceDateTime: currentDate.format(DATE_TIME_FORMAT),
-            userId: 'BBBBBB'
+            sessionTopic: 'BBBBBB',
+            sessionDateTime: currentDate.format(DATE_TIME_FORMAT),
+            pointsFor: 'BBBBBB',
+            points: 1
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            registrationDateTime: currentDate,
-            attendanceDateTime: currentDate
+            sessionDateTime: currentDate
           },
           returnedFromService
         );
 
-        service.createOrUpdate(expected).subscribe(resp => (expectedResult = resp.body));
+        service.update(expected).subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'PUT' });
         req.flush(returnedFromService);
         expect(expectedResult).toMatchObject(expected);
       });
 
-      it('should return a list of SessionParticipation', () => {
+      it('should return a list of UserPoints', () => {
         const returnedFromService = Object.assign(
           {
+            userId: 'BBBBBB',
             sessionId: 'BBBBBB',
-            userName: 'BBBBBB',
-            userEmail: 'BBBBBB',
-            registrationDateTime: currentDate.format(DATE_TIME_FORMAT),
-            attendanceDateTime: currentDate.format(DATE_TIME_FORMAT),
-            userId: 'BBBBBB'
+            sessionTopic: 'BBBBBB',
+            sessionDateTime: currentDate.format(DATE_TIME_FORMAT),
+            pointsFor: 'BBBBBB',
+            points: 1
           },
           elemDefault
         );
 
         const expected = Object.assign(
           {
-            registrationDateTime: currentDate,
-            attendanceDateTime: currentDate
+            sessionDateTime: currentDate
           },
           returnedFromService
         );
@@ -126,7 +122,7 @@ describe('Service Tests', () => {
         expect(expectedResult).toContainEqual(expected);
       });
 
-      it('should delete a SessionParticipation', () => {
+      it('should delete a UserPoints', () => {
         service.delete('123').subscribe(resp => (expectedResult = resp.ok));
 
         const req = httpMock.expectOne({ method: 'DELETE' });
