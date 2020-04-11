@@ -172,6 +172,7 @@ export class SessionComponent implements OnInit, OnDestroy {
             if(sessionId) {
               this.sessionParticipationDetails[sessionId]= {
                 registrationDateTime: partDetails[i].registrationDateTime,
+                attendanceDateTime: partDetails[i].attendanceDateTime,
                 id: partDetails[i].id
               };
             }

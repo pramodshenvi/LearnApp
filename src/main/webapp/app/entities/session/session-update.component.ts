@@ -20,6 +20,7 @@ export class SessionUpdateComponent implements OnInit {
   isSaving = false;
   courseDetails: any = {};
   allowableSMEs: string[] = [];
+  assignedSMEs: string[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -28,7 +29,6 @@ export class SessionUpdateComponent implements OnInit {
     sessionDateTime: [],
     location: [null, [Validators.required]],
     sessionPreRequisites: [],
-    assignedSMEs: [],
     attendanceLocation: []
   });
 
@@ -52,6 +52,7 @@ export class SessionUpdateComponent implements OnInit {
   }
   
   updateForm(session: ISession): void {
+    this.assignedSMEs = session.assignedSMEs || [];
     this.editForm.patchValue({
       id: session.id,
       topic: session.topic,
@@ -59,7 +60,6 @@ export class SessionUpdateComponent implements OnInit {
       sessionDateTime: session.sessionDateTime ? session.sessionDateTime.format(DATE_TIME_FORMAT) : null,
       location: session.location,
       sessionPreRequisites: session.sessionPreRequisites,
-      assignedSMEs: session.assignedSMEs,
       attendanceLocation: session.attendanceLocation
     });
   }
@@ -91,7 +91,7 @@ export class SessionUpdateComponent implements OnInit {
       sessionComplete: false,
       location: this.editForm.get(['location'])!.value,
       sessionPreRequisites: this.editForm.get(['sessionPreRequisites'])!.value,
-      assignedSMEs: this.editForm.get(['assignedSMEs'])!.value,
+      assignedSMEs: this.assignedSMEs,
       attendanceLocation: this.editForm.get(['attendanceLocation'])!.value
     };
   }
