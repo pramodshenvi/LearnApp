@@ -8,10 +8,12 @@ import { IUserPoints } from 'app/shared/model/user-points.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { UserPointsService } from './user-points.service';
+import { MessengerService } from 'app/shared/util/messenger-service';
 
 @Component({
   selector: 'jhi-user-points',
-  templateUrl: './user-points.component.html'
+  templateUrl: './user-points.component.html',
+  styleUrls: ['user-points.scss']
 })
 export class UserPointsComponent implements OnInit, OnDestroy {
   userPoints: IUserPoints[];
@@ -21,9 +23,11 @@ export class UserPointsComponent implements OnInit, OnDestroy {
   page: number;
   predicate: string;
   ascending: boolean;
+  userPointsAgg: number | undefined;
 
   constructor(
     protected userPointsService: UserPointsService,
+    protected messengerService: MessengerService,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     protected parseLinks: JhiParseLinks
@@ -34,18 +38,22 @@ export class UserPointsComponent implements OnInit, OnDestroy {
     this.links = {
       last: 0
     };
-    this.predicate = 'id';
-    this.ascending = true;
+    this.predicate = 'sessionDateTime';
+    this.ascending = false;
   }
 
   loadAll(): void {
-    this.userPointsService
-      .query({
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.sort()
-      })
-      .subscribe((res: HttpResponse<IUserPoints[]>) => this.paginateUserPoints(res.body, res.headers));
+    const account = this.messengerService.getAccount();
+    if(account){
+      this.userPointsService
+        .query({
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+          userId: account.login
+        })
+        .subscribe((res: HttpResponse<IUserPoints[]>) => this.paginateUserPoints(res.body, res.headers));
+    }
   }
 
   reset(): void {
@@ -93,7 +101,11 @@ export class UserPointsComponent implements OnInit, OnDestroy {
     if (data) {
       for (let i = 0; i < data.length; i++) {
         this.userPoints.push(data[i]);
+        if(data[i].sessionId === "AGGREGATED")
+          this.userPointsAgg = data[i].points;
       }
+      if(!this.userPointsAgg)
+        this.userPointsAgg = 0;
     }
   }
 }

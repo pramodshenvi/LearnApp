@@ -1,65 +1,40 @@
-<div>
-    <h2 id="page-heading">
-        <span>User Points</span>
+<div class="row justify-content-center">
+    <div class="col-md-8 col-sm-12">
+        <h2 id="page-heading">
+            <span>Points</span>
+            <div class="alert alert-success pointsContainer float-right" *ngIf="userPointsAgg>=0" matTooltip="Points are earned by Hosting or Participating in Sessions and can be redeemed!">
+                <span class="userPoints"><fa-icon icon="coins"></fa-icon>&nbsp;&nbsp;{{userPointsAgg}}</span>
+            </div>
+        </h2>
 
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-user-points" [routerLink]="['/user-points/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span>
-            Create a new User Points
-            </span>
-        </button>
-    </h2>
+        <div class="alert alert-warning" id="no-result" *ngIf="userPoints?.length === 0">
+            <span>No Points found!<br>Please host or attend sessions to earn points!</span>
+        </div>
 
-    <jhi-alert-error></jhi-alert-error>
-
-    <jhi-alert></jhi-alert>
-
-    <div class="alert alert-warning" id="no-result" *ngIf="userPoints?.length === 0">
-        <span>No userPoints found</span>
-    </div>
-
-    <div class="table-responsive" id="entities" *ngIf="userPoints?.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="userId"><span>User Id</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="sessionId"><span>Session Id</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="sessionTopic"><span>Session Topic</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="sessionDateTime"><span>Session Date Time</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="pointsFor"><span>Points For</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="points"><span>Points</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-                <tr *ngFor="let userPoints of userPoints ;trackBy: trackId">
-                    <td><a [routerLink]="['/user-points', userPoints.id, 'view']">{{ userPoints.id }}</a></td>
-                    <td>{{ userPoints.userId }}</td>
-                    <td>{{ userPoints.sessionId }}</td>
-                    <td>{{ userPoints.sessionTopic }}</td>
-                    <td>{{ userPoints.sessionDateTime | date:'medium' }}</td>
-                    <td>{{ userPoints.pointsFor }}</td>
-                    <td>{{ userPoints.points }}</td>
-                    <td class="text-right">
-                        <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/user-points', userPoints.id, 'view']"
-                                    class="btn btn-info btn-sm">
-                                <fa-icon icon="eye"></fa-icon>
-                                <span class="d-none d-md-inline">View</span>
-                            </button>
-
-                            <button type="submit"
-                                    [routerLink]="['/user-points', userPoints.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
-                                <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline">Edit</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive" id="entities" *ngIf="userPoints?.length > 0">
+            <table class="table table-striped" aria-describedby="page-heading">
+                <thead>
+                    <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                        <th scope="col"  jhiSortBy="sessionTopic"><span>Session Topic</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"  jhiSortBy="sessionDateTime"><span>Session Date Time</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"  jhiSortBy="pointsFor"><span>Points For</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"  jhiSortBy="points"><span>Points</span> <fa-icon icon="sort"></fa-icon></th>
+                    </tr>
+                </thead>
+                <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                    <ng-container *ngFor="let userPoints of userPoints ;trackBy: trackId">
+                        <tr *ngIf="userPoints.pointsFor == 'HOST' || userPoints.pointsFor == 'PARTICIPANT'">
+                            <td><a [routerLink]="['/course/session', userPoints.sessionId, 'view']">{{ userPoints.sessionTopic }}</a></td>
+                            <td>{{ userPoints.sessionDateTime | date:'medium' }}</td>
+                            <td class="userPointsForIcon">
+                                <fa-icon icon="user-tie" *ngIf="userPoints.pointsFor == 'HOST'" matTooltip="Hosting!"></fa-icon>
+                                <fa-icon icon="user-friends" style="margin-left: -5px;" *ngIf="userPoints.pointsFor == 'PARTICIPANT'" matTooltip="Attending!"></fa-icon>
+                            </td>
+                            <td>{{ userPoints.points }}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

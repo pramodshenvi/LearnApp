@@ -75,8 +75,13 @@ public class UserPointsService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    public Page<UserPointsDTO> findAll(Pageable pageable) {
+    public Page<UserPointsDTO> findAll(Pageable pageable, UserPointsDTO dto, StringMatcher sm) {
         log.debug("Request to get all UserPoints");
+        if(dto != null){
+            ExampleMatcher m = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(sm);
+            return userPointsRepository.findAll(Example.of(userPointsMapper.toEntity(dto),m), pageable)
+            .map(userPointsMapper::toDto);
+        }
         return userPointsRepository.findAll(pageable)
             .map(userPointsMapper::toDto);
     }

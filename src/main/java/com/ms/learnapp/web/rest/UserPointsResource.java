@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -91,9 +92,9 @@ public class UserPointsResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userPoints in body.
      */
     @GetMapping("/user-points")
-    public ResponseEntity<List<UserPointsDTO>> getAllUserPoints(Pageable pageable) {
+    public ResponseEntity<List<UserPointsDTO>> getAllUserPoints(Pageable pageable, UserPointsDTO dto) {
         log.debug("REST request to get a page of UserPoints");
-        Page<UserPointsDTO> page = userPointsService.findAll(pageable);
+        Page<UserPointsDTO> page = userPointsService.findAll(pageable, dto, StringMatcher.EXACT);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

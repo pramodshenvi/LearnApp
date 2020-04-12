@@ -7,6 +7,9 @@ import { SessionDeleteDialogComponent } from './session-delete-dialog.component'
 import { SessionMarkCompleteDialogComponent } from './session-mark-complete-dialog.component';
 import { MessengerService } from 'app/shared/util/messenger-service';
 import { Router } from "@angular/router";
+import { CourseService } from 'app/entities/course/course.service';
+import { HttpResponse } from '@angular/common/http';
+import { ICourse } from 'app/shared/model/course.model';
 
 @Component({
   selector: 'jhi-session-detail',
@@ -22,16 +25,25 @@ export class SessionDetailComponent implements OnInit {
       protected activatedRoute: ActivatedRoute, 
       protected modalService: NgbModal, 
       protected messengerService: MessengerService, 
+      protected courseService: CourseService,
       protected router: Router) {}
 
   ngOnInit(): void {
-    this.courseDetails = this.messengerService.getCourseDetails();
-    if(!this.courseDetails)
-      this.router.navigate(["/course"])
     this.activatedRoute.data.subscribe(({ session }) => {
       this.session = session;
       const qrCodeUrl = window.location.origin+'/participant?q='+escape(session.id);
       this.sessionQRUrl = 'https://chart.googleapis.com/chart?cht=qr&chl='+qrCodeUrl+'&chs=400x400&choe=UTF-8&chld=L|2'
+
+      this.courseDetails = this.messengerService.getCourseDetails();
+      if(!this.courseDetails || this.courseDetails.id !== session.courseId) {
+        this.courseService.find(session.courseId).subscribe((res: HttpResponse<ICourse>) => {
+          if ( res && res.body) {
+            const course : ICourse = res.body;
+            this.messengerService.setCourseDetails(course);
+            this.courseDetails = course;
+          }
+        });
+      }
     });
   }
 
