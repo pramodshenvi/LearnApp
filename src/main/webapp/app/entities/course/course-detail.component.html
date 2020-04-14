@@ -42,7 +42,7 @@
                                 <fa-icon icon="user-edit"></fa-icon>&nbsp;&nbsp;<span class="d-none d-md-inline">Edit SMEs</span>
                             </button>
                             <button *ngIf="!course.courseSMEs || (course.courseSMEs && !course.courseSMEs.includes(userName))" type="button"
-                                    (click)="iAmSME(course)"
+                                    (click)="iAmSME()"
                                     class="btn btn-success btn-sm float-right">
                                 <fa-icon icon="user-edit"></fa-icon>&nbsp;&nbsp;<span class="d-none d-md-inline">I am SME!</span>
                             </button>

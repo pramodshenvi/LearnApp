@@ -2,7 +2,7 @@
     <div class="col-md-8 col-sm-12">
         <h2 id="page-heading">
             <span>Points</span>
-            <div class="alert alert-success pointsContainer float-right" *ngIf="userPointsAgg>=0" matTooltip="Points are earned by Hosting or Participating in Sessions and can be redeemed!">
+            <div class="alert alert-success pointsContainer float-right" *ngIf="userPointsAgg && userPointsAgg>=0" matTooltip="Points are earned by Hosting or Participating in Sessions and can be redeemed!">
                 <span class="userPoints"><fa-icon icon="coins"></fa-icon>&nbsp;&nbsp;{{userPointsAgg}}</span>
             </div>
         </h2>
@@ -23,7 +23,7 @@
                 </thead>
                 <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                     <ng-container *ngFor="let userPoints of userPoints ;trackBy: trackId">
-                        <tr *ngIf="userPoints.pointsFor == 'HOST' || userPoints.pointsFor == 'PARTICIPANT'">
+                        <tr *ngIf="userPoints && (userPoints.pointsFor == 'HOST' || userPoints.pointsFor == 'PARTICIPANT')">
                             <td><a [routerLink]="['/course/session', userPoints.sessionId, 'view']">{{ userPoints.sessionTopic }}</a></td>
                             <td>{{ userPoints.sessionDateTime | date:'medium' }}</td>
                             <td class="userPointsForIcon">
