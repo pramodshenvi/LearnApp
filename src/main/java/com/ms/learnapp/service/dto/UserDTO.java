@@ -7,6 +7,7 @@ import com.ms.learnapp.domain.User;
 
 import javax.validation.constraints.*;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -50,6 +51,10 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private List<String> interestedInSkills;
+
+    private List<String> expertInSkills;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -70,6 +75,8 @@ public class UserDTO {
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
+        this.interestedInSkills = user.getInterestedInSkills();
+        this.expertInSkills = user.getExpertInSkills();
     }
 
     public String getId() {
@@ -176,6 +183,22 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
+    public List<String> getInterestedInSkills() {
+        return interestedInSkills;
+    }
+
+    public void setInterestedInSkills(List<String> interestedInSkills) {
+        this.interestedInSkills = interestedInSkills;
+    }
+
+    public List<String> getExpertInSkills() {
+        return expertInSkills;
+    }
+
+    public void setExpertInSkills(List<String> expertInSkills) {
+        this.expertInSkills = expertInSkills;
+    }
+    
     @Override
     public String toString() {
         return "UserDTO{" +

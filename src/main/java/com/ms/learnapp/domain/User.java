@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -78,6 +79,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @JsonIgnore
     private Set<Authority> authorities = new HashSet<>();
+
+    @Field("interestedInSkills")
+    private List<String> interestedInSkills;
+
+    @Field("expertInSkills")
+    private List<String> expertInSkills;
 
     public String getId() {
         return id;
@@ -182,6 +189,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public List<String> getInterestedInSkills() {
+        return interestedInSkills;
+    }
+
+    public void setInterestedInSkills(List<String> interestedInSkills) {
+        this.interestedInSkills = interestedInSkills;
+    }
+
+    public List<String> getExpertInSkills() {
+        return expertInSkills;
+    }
+
+    public void setExpertInSkills(List<String> expertInSkills) {
+        this.expertInSkills = expertInSkills;
     }
 
     @Override
