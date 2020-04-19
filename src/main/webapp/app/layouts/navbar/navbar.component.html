@@ -101,9 +101,9 @@
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
                     <li *ngSwitchCase="true">
-                        <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()">
-                            <fa-icon icon="wrench" fixedWidth="true"></fa-icon>
-                            <span>Settings</span>
+                        <a class="dropdown-item" routerLink="user-profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="user" fixedWidth="true"></fa-icon>
+                            <span>User Profile</span>
                         </a>
                     </li>
                     <li *ngSwitchCase="true">

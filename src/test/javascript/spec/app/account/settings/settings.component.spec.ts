@@ -21,7 +21,9 @@ describe('Component Tests', () => {
       langKey: 'en',
       login: 'john',
       authorities: [],
-      imageUrl: ''
+      imageUrl: '',
+      interestedInSkills: [],
+      expertInSkills: []
     };
 
     beforeEach(async(() => {

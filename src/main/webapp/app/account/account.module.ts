@@ -9,7 +9,6 @@ import { ActivateComponent } from './activate/activate.component';
 import { PasswordComponent } from './password/password.component';
 import { PasswordResetInitComponent } from './password-reset/init/password-reset-init.component';
 import { PasswordResetFinishComponent } from './password-reset/finish/password-reset-finish.component';
-import { SettingsComponent } from './settings/settings.component';
 import { accountState } from './account.route';
 
 @NgModule({
@@ -20,8 +19,7 @@ import { accountState } from './account.route';
     PasswordComponent,
     PasswordStrengthBarComponent,
     PasswordResetInitComponent,
-    PasswordResetFinishComponent,
-    SettingsComponent
+    PasswordResetFinishComponent
   ]
 })
 export class AccountModule {}

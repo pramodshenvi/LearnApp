@@ -1,0 +1,155 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="userProfile">
+            <h2>Hello, {{ userProfile.firstName || User }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <div class="row">
+                <!--div *ngIf="account.imagePath" class="col-md-5">
+                    <img class="courseDetailImage" [src]="account.imagePath">
+                </div-->
+                <div class="col-md-3" *ngIf="userProfile.imageUrl">
+                    <img class="profileImage" [src]="userProfile.imageUrl"/>
+                </div>
+                <div class="col-md-9">
+                    <dl class="row-md jh-entity-details">
+                        <dt><span>First name</span></dt>
+                        <dd>
+                            <span>{{ userProfile.firstName }}</span>
+                        </dd>
+                        <dt><span>Last Name</span></dt>
+                        <dd>
+                            <span>{{ userProfile.lastName }}</span>
+                        </dd>
+                        <dt><span>Email</span></dt>
+                        <dd>
+                            <span>{{ userProfile.email }}</span>
+                        </dd>
+                        <dt><span>Interested in skills</span></dt>
+                        <dd>
+                            <span>{{ userProfile.interestedInSkills }}</span>
+                        </dd>
+                        <dt><span>Expert in skills</span></dt>
+                        <dd>
+                            <span>{{ userProfile.expertInSkills }}</span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            
+            <button type="button"
+                    [routerLink]="['/user-profile/edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span class="d-none d-md-inline">Edit</span>
+            </button>
+
+            <br/><br/>
+            <h3>Upcoming sessions</h3>
+            <hr>
+            
+            <div class="row" *ngIf="registeredSessions">
+            <div class="row" *ngFor="let rsession of registeredSessions">
+                <div class="col-md-8">
+                    <span> {{ rsession.topic }} </span>
+                    <span> {{ rsession.agenda }} </span>
+                </div>
+                <div class="col-md-4">
+                    <span> {{ rsession.sessionDateTime | date:'medium' }} </span>
+                </div>
+            </div>
+            </div>
+            <div class="row" *ngIf="registeredSessions == null">
+                You haven't registered for any sessions yet
+            </div>
+
+            <br/><br/>
+            <h3>Attended sessions</h3>
+            <hr>
+
+            <div class="row" *ngIf="registeredSessions">
+                <div class="row" *ngFor="let rsession of registeredSessions">
+                    <div class="col-md-8">
+                        <span> {{ rsession.topic }} </span>
+                        <span> {{ rsession.agenda }} </span>
+                    </div>
+                    <div class="col-md-4">
+                        <span> {{ rsession.sessionDateTime | date:'medium' }} </span>
+                    </div>
+                </div>
+                </div>
+                <div class="row" *ngIf="registeredSessions == null">
+                    You haven't registered for any sessions yet
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--div>
+    <h2 id="page-heading">
+        <span>User Profile</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-user-profile" [routerLink]="['/user-profile/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span>
+            Create a new User Profile
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="userProfiles?.length === 0">
+        <span>No userProfiles found</span>
+    </div>
+
+    <div>
+
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="userProfiles?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                    <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <tr *ngFor="let userProfile of userProfiles ;trackBy: trackId">
+                    <td><a [routerLink]="['/user-profile', userProfile.id, 'view']">{{ userProfile.id }}</a></td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/user-profile', userProfile.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/user-profile', userProfile.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(userProfile)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div-->
