@@ -41,6 +41,9 @@ public class CourseResourceIT {
     private static final List<String> DEFAULT_SME_SKILLS = Arrays.asList(new String[]{"AAAAAAAAAA"}); 
     private static final List<String> UPDATED_SME_SKILLS = Arrays.asList(new String[]{"BBBBBBBBBB"});
 
+    private static final List<String> DEFAULT_COURSE_SMES = Arrays.asList(new String[]{"AAAAAAAAAA"}); 
+    private static final List<String> UPDATED_COURSE_SMES = Arrays.asList(new String[]{"BBBBBBBBBB"});
+
     private static final String DEFAULT_PRE_REQUISITES = "AAAAAAAAAA";
     private static final String UPDATED_PRE_REQUISITES = "BBBBBBBBBB";
 
@@ -97,6 +100,7 @@ public class CourseResourceIT {
         Course course = new Course()
             .courseName(DEFAULT_COURSE_NAME)
             .smeSkills(DEFAULT_SME_SKILLS)
+            .courseSMEs(DEFAULT_COURSE_SMES)
             .preRequisites(DEFAULT_PRE_REQUISITES)
             .smePoints(DEFAULT_POINTS)
             .participantPoints(DEFAULT_POINTS)
@@ -113,6 +117,7 @@ public class CourseResourceIT {
         Course course = new Course()
             .courseName(UPDATED_COURSE_NAME)
             .smeSkills(UPDATED_SME_SKILLS)
+            .courseSMEs(UPDATED_COURSE_SMES)
             .preRequisites(UPDATED_PRE_REQUISITES)
             .smePoints(UPDATED_POINTS)
             .imagePath(UPDATED_IMAGE_PATH);
@@ -233,6 +238,7 @@ public class CourseResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(course.getId())))
             .andExpect(jsonPath("$.[*].courseName").value(hasItem(DEFAULT_COURSE_NAME)))
             .andExpect(jsonPath("$.[*].smeSkills").value(hasItem(DEFAULT_SME_SKILLS)))
+            .andExpect(jsonPath("$.[*].courseSMEs").value(hasItem(DEFAULT_COURSE_SMES)))
             .andExpect(jsonPath("$.[*].preRequisites").value(hasItem(DEFAULT_PRE_REQUISITES)))
             .andExpect(jsonPath("$.[*].smePoints").value(hasItem(DEFAULT_POINTS)))
             .andExpect(jsonPath("$.[*].imagePath").value(hasItem(DEFAULT_IMAGE_PATH)));
@@ -250,6 +256,7 @@ public class CourseResourceIT {
             .andExpect(jsonPath("$.id").value(course.getId()))
             .andExpect(jsonPath("$.courseName").value(DEFAULT_COURSE_NAME))
             .andExpect(jsonPath("$.smeSkills").value(DEFAULT_SME_SKILLS))
+            .andExpect(jsonPath("$.courseSMEs").value(DEFAULT_COURSE_SMES))
             .andExpect(jsonPath("$.preRequisites").value(DEFAULT_PRE_REQUISITES))
             .andExpect(jsonPath("$.smePoints").value(DEFAULT_POINTS))
             .andExpect(jsonPath("$.imagePath").value(DEFAULT_IMAGE_PATH));
@@ -274,6 +281,7 @@ public class CourseResourceIT {
         updatedCourse
             .courseName(UPDATED_COURSE_NAME)
             .smeSkills(UPDATED_SME_SKILLS)
+            .courseSMEs(UPDATED_COURSE_SMES)
             .preRequisites(UPDATED_PRE_REQUISITES)
             .smePoints(UPDATED_POINTS)
             .imagePath(UPDATED_IMAGE_PATH);

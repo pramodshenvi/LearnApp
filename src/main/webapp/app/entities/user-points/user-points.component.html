@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+    <div class="col-md-8 col-sm-12">
+        <h2 id="page-heading">
+            <span>Points</span>
+            <div class="alert alert-success pointsContainer float-right" *ngIf="userPointsAgg && userPointsAgg>=0" matTooltip="Points are earned by Hosting or Participating in Sessions and can be redeemed!">
+                <span class="userPoints"><fa-icon icon="coins"></fa-icon>&nbsp;&nbsp;{{userPointsAgg}}</span>
+            </div>
+        </h2>
+
+        <div class="alert alert-warning" id="no-result" *ngIf="userPoints?.length === 0">
+            <span>No Points found!<br>Please host or attend sessions to earn points!</span>
+        </div>
+
+        <div class="table-responsive" id="entities" *ngIf="userPoints?.length > 0">
+            <table class="table table-striped" aria-describedby="page-heading">
+                <thead>
+                    <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+                        <th scope="col"  jhiSortBy="sessionTopic"><span>Session Topic</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"  jhiSortBy="sessionDateTime"><span>Session Date Time</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"  jhiSortBy="pointsFor"><span>Points For</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"  jhiSortBy="points"><span>Points</span> <fa-icon icon="sort"></fa-icon></th>
+                    </tr>
+                </thead>
+                <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                    <ng-container *ngFor="let userPoints of userPoints ;trackBy: trackId">
+                        <tr *ngIf="userPoints && (userPoints.pointsFor == 'HOST' || userPoints.pointsFor == 'PARTICIPANT')">
+                            <td><a [routerLink]="['/course/session', userPoints.sessionId, 'view']">{{ userPoints.sessionTopic }}</a></td>
+                            <td>{{ userPoints.sessionDateTime | date:'medium' }}</td>
+                            <td class="userPointsForIcon">
+                                <fa-icon icon="user-tie" *ngIf="userPoints.pointsFor == 'HOST'" matTooltip="Hosting!"></fa-icon>
+                                <fa-icon icon="user-friends" style="margin-left: -5px;" *ngIf="userPoints.pointsFor == 'PARTICIPANT'" matTooltip="Attending!"></fa-icon>
+                            </td>
+                            <td>{{ userPoints.points }}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -8,7 +8,6 @@ import { LearnAppAppRoutingModule } from './app-routing.module';
 import { LearnAppHomeModule } from './home/home.module';
 import { LearnAppEntityModule } from './entities/entity.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import 'hammerjs';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { MainComponent } from './layouts/main/main.component';
@@ -21,7 +20,6 @@ import { ErrorComponent } from './layouts/error/error.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
     LearnAppSharedModule,
     LearnAppCoreModule,
     LearnAppHomeModule,

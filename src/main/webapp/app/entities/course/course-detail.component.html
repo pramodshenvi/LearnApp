@@ -13,21 +13,49 @@
                 </div>
                 <div class="col-md-7">
                     <dl class="row-md jh-entity-details">
-                        <dt><span>SME Skills</span></dt>
-                        <dd>
-                            <span>{{ course.smeSkills }}</span>
-                        </dd>
                         <dt><span>Pre Requisites</span></dt>
                         <dd>
                             <span>{{ course.preRequisites }}</span>
                         </dd>
-                        <dt><span>SME Points</span></dt>
+                        <dt><span>SME Skills</span></dt>
                         <dd>
-                            <span>{{ course.smePoints }}</span>
+                            <div class="listItem" *ngFor="let skill of course.smeSkills">
+                                <fa-icon icon="graduation-cap"></fa-icon>&nbsp;&nbsp;<span>{{ skill }}</span>
+                            </div>
                         </dd>
-                        <dt><span>Participant Points</span></dt>
+                        <dt><span>Points</span></dt>
+                        <dd class="row">
+                            <div class="points col-sm-3">
+                                <div>SME</div>
+                                <span class="pointsValue">{{ course.smePoints }}</span>
+                            </div>
+                            <div class="points col-sm-3">
+                                <div>Participants</div>
+                                <span class="pointsValue">{{ course.participantPoints }}</span>
+                            </div>
+                        </dd>
+                        <dt style="margin-top: 30px;">
+                            <span>SME</span>
+                            <button *ngIf="course.courseSMEs && course.courseSMEs.includes(userName)" type="button"
+                                    (click)="editSMEs(course)"
+                                    class="btn btn-info btn-sm float-right">
+                                <fa-icon icon="user-edit"></fa-icon>&nbsp;&nbsp;<span class="d-none d-md-inline">Edit SMEs</span>
+                            </button>
+                            <button *ngIf="!course.courseSMEs || (course.courseSMEs && !course.courseSMEs.includes(userName))" type="button"
+                                    (click)="iAmSME()"
+                                    class="btn btn-success btn-sm float-right">
+                                <fa-icon icon="user-edit"></fa-icon>&nbsp;&nbsp;<span class="d-none d-md-inline">I am SME!</span>
+                            </button>
+                        </dt>
                         <dd>
-                            <span>{{ course.participantPoints }}</span>
+                            <div *ngIf="course.courseSMEs && course.courseSMEs.length > 0">
+                                <div class="listItem" *ngFor="let sme of course.courseSMEs">
+                                    <fa-icon icon="user-tie"></fa-icon>&nbsp;&nbsp;{{sme.split('|')[0]}}
+                                </div>
+                            </div>
+                            <div *ngIf="!course.courseSMEs || course.courseSMEs.length === 0">
+                                No SMEs assigned for the course!
+                            </div>
                         </dd>
                     </dl>
                 </div>

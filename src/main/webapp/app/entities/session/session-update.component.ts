@@ -10,6 +10,7 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { ISession, Session } from 'app/shared/model/session.model';
 import { SessionService } from './session.service';
 import { MessengerService } from 'app/shared/util/messenger-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-session-update',
@@ -18,6 +19,8 @@ import { MessengerService } from 'app/shared/util/messenger-service';
 export class SessionUpdateComponent implements OnInit {
   isSaving = false;
   courseDetails: any = {};
+  allowableSMEs: string[] = [];
+  assignedSMEs: string[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -26,26 +29,35 @@ export class SessionUpdateComponent implements OnInit {
     sessionDateTime: [],
     location: [null, [Validators.required]],
     sessionPreRequisites: [],
-    assignedSMEs: [],
     attendanceLocation: []
   });
 
-  constructor(protected sessionService: SessionService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder, protected messengerService: MessengerService) {}
+  constructor(
+    protected sessionService: SessionService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    protected messengerService: MessengerService,
+    protected router: Router
+  ) {}
 
   ngOnInit(): void {
     this.courseDetails = this.messengerService.getCourseDetails();
+    if (!this.courseDetails) this.router.navigate(['/course']);
+    else {
+      this.allowableSMEs = this.courseDetails.courseSMEs;
+      this.activatedRoute.data.subscribe(({ session }) => {
+        if (!session.id) {
+          const today = moment().startOf('day');
+          session.sessionDateTime = today;
+        }
 
-    this.activatedRoute.data.subscribe(({ session }) => {
-      if (!session.id) {
-        const today = moment().startOf('day');
-        session.sessionDateTime = today;
-      }
-
-      this.updateForm(session);
-    });
+        this.updateForm(session);
+      });
+    }
   }
-  
+
   updateForm(session: ISession): void {
+    this.assignedSMEs = session.assignedSMEs || [];
     this.editForm.patchValue({
       id: session.id,
       topic: session.topic,
@@ -53,7 +65,6 @@ export class SessionUpdateComponent implements OnInit {
       sessionDateTime: session.sessionDateTime ? session.sessionDateTime.format(DATE_TIME_FORMAT) : null,
       location: session.location,
       sessionPreRequisites: session.sessionPreRequisites,
-      assignedSMEs: session.assignedSMEs,
       attendanceLocation: session.attendanceLocation
     });
   }
@@ -85,7 +96,7 @@ export class SessionUpdateComponent implements OnInit {
       sessionComplete: false,
       location: this.editForm.get(['location'])!.value,
       sessionPreRequisites: this.editForm.get(['sessionPreRequisites'])!.value,
-      assignedSMEs: this.editForm.get(['assignedSMEs'])!.value,
+      assignedSMEs: this.assignedSMEs,
       attendanceLocation: this.editForm.get(['attendanceLocation'])!.value
     };
   }

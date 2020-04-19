@@ -70,9 +70,9 @@ public class SessionParticipationResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of sessionParticipations in body.
      */
     @GetMapping("/session-participations")
-    public ResponseEntity<List<SessionParticipationDTO>> getAllSessionParticipations(Pageable pageable) {
+    public ResponseEntity<List<SessionParticipationDTO>> getAllSessionParticipations(SessionParticipationDTO dto, Pageable pageable) {
         log.debug("REST request to get a page of SessionParticipations");
-        Page<SessionParticipationDTO> page = sessionParticipationService.findAll(pageable);
+        Page<SessionParticipationDTO> page = sessionParticipationService.findAll(dto, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

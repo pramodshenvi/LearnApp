@@ -1,0 +1,6 @@
+<a routerLink="user-points">
+<div class="alert alert-success pointsContainer float-right" *ngIf="userPoints>=0" matTooltip="Points are earned by Hosting or Participating in Sessions and can be redeemed!">
+    <span class="userPoints"><fa-icon icon="coins"></fa-icon>&nbsp;&nbsp;{{userPoints}}</span>
+</div>
+</a>
+<jhi-recommendations></jhi-recommendations>

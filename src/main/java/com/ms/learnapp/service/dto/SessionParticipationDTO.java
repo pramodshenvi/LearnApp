@@ -16,6 +16,9 @@ public class SessionParticipationDTO implements Serializable {
     private String sessionId;
 
     @NotNull
+    private String courseId;
+
+    @NotNull
     private String userName;
 
     @NotNull
@@ -85,6 +88,14 @@ public class SessionParticipationDTO implements Serializable {
         this.userId = userId;
     }
 
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -111,6 +122,7 @@ public class SessionParticipationDTO implements Serializable {
         return "SessionParticipationDTO{" +
             "id=" + getId() +
             ", sessionId='" + getSessionId() + "'" +
+            ", courseId='" + getCourseId() + "'" +
             ", userName='" + getUserName() + "'" +
             ", userEmail='" + getUserEmail() + "'" +
             ", registrationDateTime='" + getRegistrationDateTime() + "'" +

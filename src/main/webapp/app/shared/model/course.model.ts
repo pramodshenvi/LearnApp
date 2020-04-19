@@ -2,6 +2,7 @@ export interface ICourse {
   id?: string;
   courseName?: string;
   smeSkills?: string[];
+  courseSMEs?: string[];
   preRequisites?: string;
   smePoints?: number;
   participantPoints?: number;
@@ -13,6 +14,7 @@ export class Course implements ICourse {
     public id?: string,
     public courseName?: string,
     public smeSkills?: string[],
+    public courseSMEs?: string[],
     public preRequisites?: string,
     public smePoints?: number,
     public participantPoints?: number,

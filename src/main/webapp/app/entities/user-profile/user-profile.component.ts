@@ -3,7 +3,6 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { ISession } from 'app/shared/model/session.model';
 import { UserProfileService } from './user-profile.service';
-import { Moment } from 'moment';
 
 @Component({
   selector: 'jhi-user-profile',

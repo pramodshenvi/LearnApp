@@ -11,6 +11,13 @@
             ]
         },
         {
+            "fieldName": "courseId",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
             "fieldName": "userName",
             "fieldType": "String",
             "fieldValidateRules": [

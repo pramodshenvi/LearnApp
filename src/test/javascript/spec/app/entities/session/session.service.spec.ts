@@ -35,7 +35,7 @@ describe('Service Tests', () => {
         false,
         SessionLocation.BANGALORE,
         'AAAAAAA',
-        'AAAAAAA',
+        ['AAAAAAA'],
         AttendanceLocationTypes.CLASSROOM
       );
     });
@@ -87,7 +87,7 @@ describe('Service Tests', () => {
             sessionDateTime: currentDate.format(DATE_TIME_FORMAT),
             location: 'BBBBBB',
             sessionPreRequisites: 'BBBBBB',
-            assignedSMEs: 'BBBBBB',
+            assignedSMEs: ['BBBBBB'],
             attendanceLocation: 'BBBBBB'
           },
           elemDefault
@@ -115,7 +115,7 @@ describe('Service Tests', () => {
             sessionDateTime: currentDate.format(DATE_TIME_FORMAT),
             location: 'BBBBBB',
             sessionPreRequisites: 'BBBBBB',
-            assignedSMEs: 'BBBBBB',
+            assignedSMEs: ['BBBBBB'],
             attendanceLocation: 'BBBBBB'
           },
           elemDefault

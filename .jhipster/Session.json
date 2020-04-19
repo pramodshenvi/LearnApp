@@ -46,7 +46,7 @@
         },
         {
             "fieldName": "assignedSMEs",
-            "fieldType": "String"
+            "fieldType": "List<String>"
         },
         {
             "fieldName": "attendanceLocation",

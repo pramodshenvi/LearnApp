@@ -1,13 +1,8 @@
 <div class="row justify-content-center">
     <div class="col-lg-8 col-sm-12">
-        <h1 class="display-4">Welcome<span *ngIf="isAuthenticated()">, {{account.firstName}} {{account.lastName}}</span>!</h1>
+        <h1 class="display-4">Welcome<span *ngIf="isAuthenticated() && account">, {{account.firstName}} {{account.lastName}}</span>!</h1>
 
         <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-success col-lg-6 col-sm-12" *ngSwitchCase="true">
-                <span id="home-logged-message" *ngIf="account"
-                   > You are logged in as user "{{account.login}}". </span>
-            </div>
-
             <div class="alert alert-warning col-lg-6 col-sm-12" *ngSwitchCase="false">
                 <span>Please </span><a class="alert-link" (click)="login()">sign in</a><span> to continue!</span>
             </div>
@@ -16,7 +11,7 @@
                 <a class="alert-link" routerLink="account/register">Register a new account</a>
             </div>
 
-            <jhi-recommendations *ngSwitchCase="true"></jhi-recommendations>
+            <jhi-user-home *ngSwitchCase="true"></jhi-user-home>
         </div>
     </div>
 </div>

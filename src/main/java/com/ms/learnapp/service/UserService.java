@@ -264,6 +264,22 @@ public class UserService {
         return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
     }
 
+    public List<UserDTO> findMatchingUsersWithFirstOrLastNameContaining(String userName) {
+        log.debug("Request to get all matching users");
+        String[] userIdSplit = userName.split("\\s+");
+        if(userIdSplit != null && userIdSplit.length == 2) {
+            return userRepository.findMatchByFirstNameAndLastNameContaining("^"+userIdSplit[0], "^"+userIdSplit[1])
+            .stream()
+            .map(UserDTO::new)
+            .collect(Collectors.toCollection(LinkedList::new));
+        }
+        String userIdList = "^"+ String.join("|^", userIdSplit);
+        return userRepository.findAllByFirstNameOrLastNameContaining(userIdList)
+        .stream()
+        .map(UserDTO::new)
+        .collect(Collectors.toCollection(LinkedList::new));
+    }
+
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneByLogin(login);
     }

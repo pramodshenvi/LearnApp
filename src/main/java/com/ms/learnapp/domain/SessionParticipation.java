@@ -24,6 +24,10 @@ public class SessionParticipation implements Serializable {
     private String sessionId;
 
     @NotNull
+    @Field("course_id")
+    private String courseId;
+
+    @NotNull
     @Field("user_name")
     private String userName;
 
@@ -61,6 +65,19 @@ public class SessionParticipation implements Serializable {
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public SessionParticipation courseId(String courseId) {
+        this.courseId = courseId;
+        return this;
     }
 
     public String getUserName() {
@@ -150,6 +167,7 @@ public class SessionParticipation implements Serializable {
         return "SessionParticipation{" +
             "id=" + getId() +
             ", sessionId='" + getSessionId() + "'" +
+            ", courseId='" + getCourseId() + "'" +
             ", userName='" + getUserName() + "'" +
             ", userEmail='" + getUserEmail() + "'" +
             ", registrationDateTime='" + getRegistrationDateTime() + "'" +

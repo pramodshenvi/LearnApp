@@ -38,7 +38,7 @@ export class SessionParticipationComponent implements OnInit, OnDestroy {
     protected parseLinks: JhiParseLinks,
     protected route: ActivatedRoute
   ) {
-    this.sessionId = this.getUrlParam("q");
+    this.sessionId = this.getUrlParam('q');
   }
 
   loadAll(): void {
@@ -47,11 +47,10 @@ export class SessionParticipationComponent implements OnInit, OnDestroy {
         id: this.sessionId
       })
       .subscribe((res: HttpResponse<ISession[]>) => {
-        if ( res && res.body && res.body.length > 0) {
+        if (res && res.body && res.body.length > 0) {
           this.session = res.body[0];
           this.registerSessionParticipation(this.session);
-        } else
-          this.sessionLoadError = true;
+        } else this.sessionLoadError = true;
       });
   }
 
@@ -66,21 +65,22 @@ export class SessionParticipationComponent implements OnInit, OnDestroy {
   }
 
   registerSessionParticipation(session: ISession): void {
-    const partObj = this.createParticipation(session.id);
-    if(partObj)
+    const partObj = this.createParticipation(session.id, session.courseId);
+    if (partObj)
       this.sessionParticipationService.createOrUpdate(partObj).subscribe(() => {
         this.participationRecorded = true;
       });
   }
 
-  private createParticipation(sessId: string | undefined): ISessionParticipation | null {
-    const acct : Account | null = this.messengerService.getAccount();
-    let returnObj : ISessionParticipation | null = null;
+  private createParticipation(sessId: string | undefined, cId: string | undefined): ISessionParticipation | null {
+    const acct: Account | null = this.messengerService.getAccount();
+    let returnObj: ISessionParticipation | null = null;
     if (acct) {
       returnObj = {
         ...new SessionParticipation(),
         sessionId: sessId,
-        userName: acct.firstName + ' ' +acct.lastName,
+        courseId: cId,
+        userName: acct.firstName + ' ' + acct.lastName,
         userEmail: acct.email,
         attendanceDateTime: moment(),
         userId: acct.login
@@ -89,7 +89,7 @@ export class SessionParticipationComponent implements OnInit, OnDestroy {
     return returnObj;
   }
 
-  private getUrlParam(param: string) : string | null {
+  private getUrlParam(param: string): string | null {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
   }

@@ -43,6 +43,9 @@ public class SessionParticipationResourceIT {
     private static final String DEFAULT_SESSION_ID = "AAAAAAAAAA";
     private static final String UPDATED_SESSION_ID = "BBBBBBBBBB";
 
+    private static final String DEFAULT_COURSE_ID = "AAAAAAAAAA";
+    private static final String UPDATED_COURSE_ID = "BBBBBBBBBB";
+
     private static final String DEFAULT_USER_NAME = "AAAAAAAAAA";
     private static final String UPDATED_USER_NAME = "BBBBBBBBBB";
 
@@ -104,6 +107,7 @@ public class SessionParticipationResourceIT {
     public static SessionParticipation createEntity() {
         SessionParticipation sessionParticipation = new SessionParticipation()
             .sessionId(DEFAULT_SESSION_ID)
+            .courseId(DEFAULT_COURSE_ID)
             .userName(DEFAULT_USER_NAME)
             .userEmail(DEFAULT_USER_EMAIL)
             .registrationDateTime(DEFAULT_REGISTRATION_DATE_TIME)
@@ -120,6 +124,7 @@ public class SessionParticipationResourceIT {
     public static SessionParticipation createUpdatedEntity() {
         SessionParticipation sessionParticipation = new SessionParticipation()
             .sessionId(UPDATED_SESSION_ID)
+            .courseId(UPDATED_COURSE_ID)
             .userName(UPDATED_USER_NAME)
             .userEmail(UPDATED_USER_EMAIL)
             .registrationDateTime(UPDATED_REGISTRATION_DATE_TIME)
@@ -260,6 +265,7 @@ public class SessionParticipationResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(sessionParticipation.getId())))
             .andExpect(jsonPath("$.[*].sessionId").value(hasItem(DEFAULT_SESSION_ID)))
+            .andExpect(jsonPath("$.[*].courseId").value(hasItem(DEFAULT_COURSE_ID)))
             .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME)))
             .andExpect(jsonPath("$.[*].userEmail").value(hasItem(DEFAULT_USER_EMAIL)))
             .andExpect(jsonPath("$.[*].registrationDateTime").value(hasItem(sameInstant(DEFAULT_REGISTRATION_DATE_TIME))))
@@ -278,6 +284,7 @@ public class SessionParticipationResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(sessionParticipation.getId()))
             .andExpect(jsonPath("$.sessionId").value(DEFAULT_SESSION_ID))
+            .andExpect(jsonPath("$.courseId").value(DEFAULT_COURSE_ID))
             .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME))
             .andExpect(jsonPath("$.userEmail").value(DEFAULT_USER_EMAIL))
             .andExpect(jsonPath("$.registrationDateTime").value(sameInstant(DEFAULT_REGISTRATION_DATE_TIME)))
@@ -303,6 +310,7 @@ public class SessionParticipationResourceIT {
         SessionParticipation updatedSessionParticipation = sessionParticipationRepository.findById(sessionParticipation.getId()).get();
         updatedSessionParticipation
             .sessionId(UPDATED_SESSION_ID)
+            .courseId(UPDATED_COURSE_ID)
             .userName(UPDATED_USER_NAME)
             .userEmail(UPDATED_USER_EMAIL)
             .registrationDateTime(UPDATED_REGISTRATION_DATE_TIME)
