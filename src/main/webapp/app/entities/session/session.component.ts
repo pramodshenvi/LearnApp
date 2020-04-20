@@ -11,7 +11,7 @@ import { SessionService } from './session.service';
 import { SessionDeleteDialogComponent } from './session-delete-dialog.component';
 import { MessengerService } from 'app/shared/util/messenger-service';
 import { SessionParticipationService } from 'app/entities/session-participation/session-participation.service';
-import { ISessionParticipation, SessionParticipation} from 'app/shared/model/session-participation.model';
+import { ISessionParticipation, SessionParticipation } from 'app/shared/model/session-participation.model';
 import * as moment from 'moment';
 import { Account } from 'app/core/user/account.model';
 
@@ -109,14 +109,14 @@ export class SessionComponent implements OnInit, OnDestroy {
   }
 
   private createParticipation(sessId: string | undefined, cId: string | undefined): ISessionParticipation | null {
-    const acct : Account | null = this.messengerService.getAccount();
-    let returnObj : ISessionParticipation | null = null;
+    const acct: Account | null = this.messengerService.getAccount();
+    let returnObj: ISessionParticipation | null = null;
     if (acct) {
       returnObj = {
         ...new SessionParticipation(),
         sessionId: sessId,
         courseId: cId,
-        userName: acct.firstName + ' ' +acct.lastName,
+        userName: acct.firstName + ' ' + acct.lastName,
         userEmail: acct.email,
         registrationDateTime: moment(),
         userId: acct.login
@@ -127,7 +127,7 @@ export class SessionComponent implements OnInit, OnDestroy {
 
   registerForSession(session: ISession): void {
     const partObj = this.createParticipation(session.id, session.courseId);
-    if(partObj)
+    if (partObj)
       this.participationService.createOrUpdate(partObj).subscribe(() => {
         this.getSessionParticipationDetails(this.sessions);
       });
@@ -150,36 +150,36 @@ export class SessionComponent implements OnInit, OnDestroy {
   }
 
   protected getSessionParticipationDetails(data: ISession[] | null): void {
-    const acct : Account | null = this.messengerService.getAccount();
-    let sessionIds = "";
+    const acct: Account | null = this.messengerService.getAccount();
+    let sessionIds = '';
     if (data && acct) {
       for (let i = 0; i < data.length; i++) {
-        sessionIds+=data[i].id;
-        if(i<data.length-1)
-          sessionIds+=",";
+        sessionIds += data[i].id;
+        if (i < data.length - 1) sessionIds += ',';
       }
       const participationObj = {
         ...new SessionParticipation(),
         sessionId: sessionIds,
         userId: acct.login
       };
-      this.participationService.getMatchingSessionParticipationsForUser(participationObj)
-      .subscribe((res: HttpResponse<ISessionParticipation[]>) => {
-        const partDetails = res.body;
-        this.sessionParticipationDetails = {};
-        if (partDetails && partDetails.length > 0) {
-          for (let i = 0; i < partDetails.length; i++) {
-            const sessionId: string | undefined = partDetails[i].sessionId;
-            if(sessionId) {
-              this.sessionParticipationDetails[sessionId]= {
-                registrationDateTime: partDetails[i].registrationDateTime,
-                attendanceDateTime: partDetails[i].attendanceDateTime,
-                id: partDetails[i].id
-              };
+      this.participationService
+        .getMatchingSessionParticipationsForUser(participationObj)
+        .subscribe((res: HttpResponse<ISessionParticipation[]>) => {
+          const partDetails = res.body;
+          this.sessionParticipationDetails = {};
+          if (partDetails && partDetails.length > 0) {
+            for (let i = 0; i < partDetails.length; i++) {
+              const sessionId: string | undefined = partDetails[i].sessionId;
+              if (sessionId) {
+                this.sessionParticipationDetails[sessionId] = {
+                  registrationDateTime: partDetails[i].registrationDateTime,
+                  attendanceDateTime: partDetails[i].attendanceDateTime,
+                  id: partDetails[i].id
+                };
+              }
             }
           }
-        }
-      });
+        });
     }
   }
 }

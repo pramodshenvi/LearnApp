@@ -16,4 +16,7 @@ import org.springframework.stereotype.Repository;
 public interface SessionParticipationRepository extends MongoRepository<SessionParticipation, String> {
     @Query("{'user_id' : ?0 , 'session_id' : {$in:?1 }}")
     List<SessionParticipation> findSessionParticipationByUserIdAndSessionIdContaining(String userId, List<String> sessionIds);
+
+    @Query("{'user_id' : ?0}")
+    List<SessionParticipation> findSessionParticipationByUserId(String userId);
 }

@@ -10,7 +10,7 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { ISession, Session } from 'app/shared/model/session.model';
 import { SessionService } from './session.service';
 import { MessengerService } from 'app/shared/util/messenger-service';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-session-update',
@@ -32,12 +32,17 @@ export class SessionUpdateComponent implements OnInit {
     attendanceLocation: []
   });
 
-  constructor(protected sessionService: SessionService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder, protected messengerService: MessengerService, protected router: Router) {}
+  constructor(
+    protected sessionService: SessionService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    protected messengerService: MessengerService,
+    protected router: Router
+  ) {}
 
   ngOnInit(): void {
     this.courseDetails = this.messengerService.getCourseDetails();
-    if(!this.courseDetails)
-      this.router.navigate(["/course"]);
+    if (!this.courseDetails) this.router.navigate(['/course']);
     else {
       this.allowableSMEs = this.courseDetails.courseSMEs;
       this.activatedRoute.data.subscribe(({ session }) => {
@@ -50,7 +55,7 @@ export class SessionUpdateComponent implements OnInit {
       });
     }
   }
-  
+
   updateForm(session: ISession): void {
     this.assignedSMEs = session.assignedSMEs || [];
     this.editForm.patchValue({

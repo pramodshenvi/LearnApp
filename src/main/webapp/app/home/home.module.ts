@@ -6,7 +6,7 @@ import { HOME_ROUTE } from './home.route';
 import { HomeComponent } from './home.component';
 import { UserHomeComponent } from './user-home.component';
 
-import { RecommendationComponent } from 'app/shared/recommendations/recommendations.component'
+import { RecommendationComponent } from 'app/shared/recommendations/recommendations.component';
 
 @NgModule({
   imports: [LearnAppSharedModule, RouterModule.forChild([HOME_ROUTE])],

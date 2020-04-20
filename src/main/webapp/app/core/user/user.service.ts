@@ -31,7 +31,7 @@ export class UserService {
   }
 
   queryMatchingUsers(userName: string): Observable<HttpResponse<IUser[]>> {
-    const options = createRequestOption({userName});
+    const options = createRequestOption({ userName });
     return this.http.get<IUser[]>(this.matchingUserUrl, { params: options, observe: 'response' });
   }
 

@@ -33,7 +33,12 @@ export class CourseUpdateComponent implements OnInit {
     newSMESkill: []
   });
 
-  constructor(protected courseService: CourseService, protected skillService: SkillService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected courseService: CourseService,
+    protected skillService: SkillService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ course }) => {
@@ -47,18 +52,18 @@ export class CourseUpdateComponent implements OnInit {
     this.smeSkills.splice(index, 1);
   }
 
-  loadSkills(evt:any): void {
+  loadSkills(evt: any): void {
     this.skillDropDownKeyboardAction = evt.key;
-    setTimeout(()=>{
-      this.skillDropDownKeyboardAction = "reset";
-    },200)
+    setTimeout(() => {
+      this.skillDropDownKeyboardAction = 'reset';
+    }, 200);
     const skillVal = this.editForm.get(['newSMESkill'])!.value;
-    if (skillVal && skillVal !== "") {
-      if(evt.key !== "Enter" && evt.key !== "ArrowUp"  && evt.key !== "ArrowDown"){
+    if (skillVal && skillVal !== '') {
+      if (evt.key !== 'Enter' && evt.key !== 'ArrowUp' && evt.key !== 'ArrowDown') {
         this.skillsDropdownList = [];
-        const skill:ISkill = {name:skillVal};
-        this.skillService.query(skill).subscribe((s) => {
-          this.skillsDropdownList = (s.body) ? s.body.slice(0,5) : [];
+        const skill: ISkill = { name: skillVal };
+        this.skillService.query(skill).subscribe(s => {
+          this.skillsDropdownList = s.body ? s.body.slice(0, 5) : [];
         });
       }
     }

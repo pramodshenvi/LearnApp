@@ -20,7 +20,9 @@ function accountWithAuthorities(authorities: string[]): Account {
     langKey: '',
     lastName: '',
     login: '',
-    imageUrl: ''
+    imageUrl: '',
+    interestedInSkills: [],
+    expertInSkills: []
   };
 }
 

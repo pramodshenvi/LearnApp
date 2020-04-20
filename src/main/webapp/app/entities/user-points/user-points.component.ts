@@ -44,7 +44,7 @@ export class UserPointsComponent implements OnInit, OnDestroy {
 
   loadAll(): void {
     const account = this.messengerService.getAccount();
-    if(account){
+    if (account) {
       this.userPointsService
         .query({
           page: this.page,
@@ -101,11 +101,9 @@ export class UserPointsComponent implements OnInit, OnDestroy {
     if (data) {
       for (let i = 0; i < data.length; i++) {
         this.userPoints.push(data[i]);
-        if(data[i].sessionId === "AGGREGATED")
-          this.userPointsAgg = data[i].points;
+        if (data[i].sessionId === 'AGGREGATED') this.userPointsAgg = data[i].points;
       }
-      if(!this.userPointsAgg)
-        this.userPointsAgg = 0;
+      if (!this.userPointsAgg) this.userPointsAgg = 0;
     }
   }
 }

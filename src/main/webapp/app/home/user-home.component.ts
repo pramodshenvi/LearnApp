@@ -19,18 +19,16 @@ export class UserHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.account = this.messengerService.getAccount();
-    if(this.account) {
+    if (this.account) {
       this.userPointsService
-      .query({
-        userId: this.account.login,
-        sessionId: "AGGREGATED"
-      })
-      .subscribe((res: HttpResponse<IUserPoints[]>) => {
-        if ( res && res.body && res.body.length > 0 && res.body[0].points)
-          this.userPoints = res.body[0].points;
-        else
-          this.userPoints = 0;
-      });
+        .query({
+          userId: this.account.login,
+          sessionId: 'AGGREGATED'
+        })
+        .subscribe((res: HttpResponse<IUserPoints[]>) => {
+          if (res && res.body && res.body.length > 0 && res.body[0].points) this.userPoints = res.body[0].points;
+          else this.userPoints = 0;
+        });
     }
   }
 }

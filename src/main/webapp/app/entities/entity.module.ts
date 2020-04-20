@@ -17,6 +17,10 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./session-participation/session-participation.module').then(m => m.LearnAppSessionParticipationModule)
       },
       {
+        path: 'user-profile',
+        loadChildren: () => import('./user-profile/user-profile.module').then(m => m.LearnAppUserProfileModule)
+      },
+      {
         path: 'user-points',
         loadChildren: () => import('./user-points/user-points.module').then(m => m.LearnAppUserPointsModule)
       }
