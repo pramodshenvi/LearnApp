@@ -46,7 +46,7 @@
                     <label class="form-control-label" for="field_interested">Skills you're interested in</label>
                     <input type="text" class="form-control" name="interested" id="field_interested"
                            formControlName="newInterestedSkills" (keyup)="loadSkills($event, 'interested')" autocomplete="off"/>
-                    <jhi-dynamic-dropdown [keyboardAction]=skillDropDownKeyboardAction1 [dropdownList]=skillsDropdownList1 (selectedValueEmitter)="onInterestedValueSelection($event,'interested');" ></jhi-dynamic-dropdown>
+                    <jhi-dynamic-dropdown [keyboardAction]=skillDropDownKeyboardAction1 [dropdownList]=skillsDropdownList1 (selectedValueEmitter)="onInterestedValueSelection($event);" ></jhi-dynamic-dropdown>
                     <div *ngIf="interestedInSkills && interestedInSkills.length > 0">
                         <div *ngFor="let skill of interestedInSkills.reverse(); let i=index">
                             <span class="skillsValue">
@@ -61,7 +61,7 @@
                     <label class="form-control-label" for="field_expert">Skills you're expert in</label>
                     <input type="text" class="form-control" name="expert" id="field_expert"
                            formControlName="newExpertSkills" (keyup)="loadSkills($event, 'expert')" autocomplete="off"/>
-                    <jhi-dynamic-dropdown [keyboardAction]=skillDropDownKeyboardAction2 [dropdownList]=skillsDropdownList2 (selectedValueEmitter)="onExpertValueSelection($event,'expert');" ></jhi-dynamic-dropdown>
+                    <jhi-dynamic-dropdown [keyboardAction]=skillDropDownKeyboardAction2 [dropdownList]=skillsDropdownList2 (selectedValueEmitter)="onExpertValueSelection($event);" ></jhi-dynamic-dropdown>
                     <div *ngIf="expertInSkills && expertInSkills.length > 0">
                         <div *ngFor="let skill of expertInSkills.reverse(); let i=index">
                             <span class="skillsValue">

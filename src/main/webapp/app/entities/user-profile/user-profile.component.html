@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="userProfile">
-            <h2>Hello, {{ userProfile.firstName || User }}</h2>
+            <h2>Hello, {{ userProfile.firstName || 'User' }}</h2>
 
             <hr>
 

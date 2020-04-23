@@ -45,7 +45,6 @@ export class UserProfileUpdateComponent implements OnInit {
   }
 
   updateForm(account: Account): void {
-    console.log(account);
     this.interestedInSkills = account.interestedInSkills;
     this.expertInSkills = account.expertInSkills;
     this.editForm.patchValue({
@@ -57,7 +56,6 @@ export class UserProfileUpdateComponent implements OnInit {
   }
 
   loadSkills(evt: any, field: string): void {
-    console.log(evt);
     if (field === 'interested') {
       this.skillDropDownKeyboardAction1 = evt.key;
     } else {
@@ -108,9 +106,6 @@ export class UserProfileUpdateComponent implements OnInit {
   }
 
   deleteSkill(index: number, field: string): void {
-    console.log(index + ' - ' + field);
-    console.log(this.interestedInSkills);
-    console.log(this.expertInSkills);
     if (field === 'interested') {
       this.interestedInSkills.splice(index, 1);
     } else {
