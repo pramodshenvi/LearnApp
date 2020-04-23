@@ -10,7 +10,6 @@ import { CourseModifySMEDialogComponent } from './course-modify-sme-dialog.compo
 
 import { courseRoute } from './course.route';
 
-import { DynamicDropdownComponent } from 'app/shared/util/dynamic-dropdown';
 import { SessionComponent } from 'app/entities/session/session.component';
 import { SessionDeleteDialogComponent } from 'app/entities/session/session-delete-dialog.component';
 import { SessionMarkCompleteDialogComponent } from 'app/entities/session/session-mark-complete-dialog.component';
@@ -25,8 +24,7 @@ import { SessionMarkCompleteDialogComponent } from 'app/entities/session/session
     CourseDetailComponent,
     CourseUpdateComponent,
     CourseDeleteDialogComponent,
-    CourseModifySMEDialogComponent,
-    DynamicDropdownComponent
+    CourseModifySMEDialogComponent
   ],
   entryComponents: [
     CourseDeleteDialogComponent,

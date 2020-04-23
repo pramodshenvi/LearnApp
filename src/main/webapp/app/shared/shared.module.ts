@@ -6,10 +6,12 @@ import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 import {JhMaterialModule} from 'app/shared/jh-material.module';
+import { DynamicDropdownComponent } from 'app/shared/util/dynamic-dropdown';
+
 @NgModule({
   imports: [JhMaterialModule, LearnAppSharedLibsModule],
-  declarations: [AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective],
+  declarations: [AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective, DynamicDropdownComponent],
   entryComponents: [LoginModalComponent],
-  exports: [JhMaterialModule, LearnAppSharedLibsModule, AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective]
+  exports: [JhMaterialModule, LearnAppSharedLibsModule, AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective, DynamicDropdownComponent]
 })
 export class LearnAppSharedModule {}

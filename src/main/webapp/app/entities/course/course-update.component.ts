@@ -108,7 +108,7 @@ export class CourseUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       courseName: this.editForm.get(['courseName'])!.value,
       smeSkills: this.smeSkills,
-      courseSMEs: this.courseSMEs,
+      courseSMEs: this.courseSMEs || [],
       preRequisites: this.editForm.get(['preRequisites'])!.value,
       smePoints: this.editForm.get(['smePoints'])!.value,
       participantPoints: this.editForm.get(['participantPoints'])!.value,
