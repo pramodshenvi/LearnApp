@@ -69,3 +69,17 @@ span.smeSkillsValue {
 .points .pointsValue {
   font-size: 30px;
 }
+
+.searchSME {
+  text-align: center;
+  width: 150px;
+  border: 1px solid #868686;
+  border-radius: 20px;
+  padding: 3px 10px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.searchSME:hover {
+  background-color: #d7d7d7;
+}

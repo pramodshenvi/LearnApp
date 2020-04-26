@@ -163,6 +163,21 @@ public class UserResource {
     }
 
     /**
+     * {@code POST /users-matching-sme-skills} : get all users with maching SME Skills.
+     *
+     * @param names the pagination information.
+     * @return the {@link List<UserDTO>} with status {@code 200 (OK)} and with body all matching users.
+     */
+    @PostMapping("/users-matching-sme-skills")
+    public ResponseEntity<List<UserDTO>> getUsersWithMatchingSMESkills(@RequestBody UserDTO user) {
+        List<UserDTO> userList = new ArrayList<>();
+        if(user != null && user.getExpertInSkills() != null && user.getExpertInSkills().size() > 0) {
+            userList = userService.findUsersByMatchingSMESkills(user.getExpertInSkills());
+        }
+        return new ResponseEntity<>(userList, null, HttpStatus.OK);
+    }
+
+    /**
      * Gets a list of all roles.
      * @return a string list of all roles.
      */

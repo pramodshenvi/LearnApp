@@ -1,0 +1,67 @@
+span.smeSkillsValue {
+  margin: 10px 0px 0px 20px;
+  border: 1px solid #c6c6c6;
+  border-radius: 5px;
+  padding: 5px 10px;
+  background: #f3f3f3;
+  float: left;
+}
+
+.searchIcon {
+  font-size: 27px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.searchIcon:hover {
+  font-size: 30px;
+  margin-top: 2px;
+  font-weight: bolder;
+}
+
+.searchBar {
+  margin: auto 0;
+}
+
+.searchForm {
+  margin-bottom: 15px;
+}
+
+.smeListContainer {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+
+#field_smeSkills {
+  border-radius: 50px;
+  height: 50px;
+}
+
+.userIcon {
+  font-size: 35px;
+  text-align: center;
+}
+
+.userIcon fa-icon {
+  vertical-align: middle;
+}
+
+.smeName {
+  font-size: 22px;
+}
+
+.smeRow {
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.smeEmail {
+  font-size: 14px;
+}
+
+.searchSkill {
+  color: #0e7c0e;
+  font-weight: bold;
+}

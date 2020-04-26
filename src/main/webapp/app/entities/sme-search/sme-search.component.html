@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-sm-12">
+        <h2 id="page-heading">
+            <span>SME Search</span>
+        </h2>
+        <br>
+        <div class="searchPage">
+            <form name="smeSearchForm" [formGroup]="editForm" class="searchForm">
+                <div class="form-group">
+                    <div class="row searchBar">
+                        <input type="text" class="form-control col-sm-11" name="smeSkills" id="field_smeSkills"
+                            formControlName="searchSMESkill" (keyup)="loadSkills($event)" autocomplete="off"/>
+                        <div class="col-sm-1 searchIcon" (click)="getSMEUsers(smeSkills)"><fa-icon icon="search"></fa-icon></div>
+                    </div>
+                    <jhi-dynamic-dropdown [keyboardAction]=skillDropDownKeyboardAction [dropdownList]=skillsDropdownList (selectedValueEmitter)="onDropdownValueSelection($event);" ></jhi-dynamic-dropdown>
+                    <div *ngIf="smeSkills && smeSkills.length > 0">
+                        <div *ngFor="let skill of smeSkills let i=index">
+                            <span class="smeSkillsValue">
+                                <fa-icon icon="graduation-cap"></fa-icon>&nbsp;&nbsp;<span>{{skill}}</span>&nbsp;&nbsp;&nbsp;
+                                <fa-icon (click)="deleteSMESkill(i)" icon="times"></fa-icon>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <br><br>
+            <div class="container-fluid smeListContainer">
+                <div class="alert alert-warning" id="no-result" *ngIf="noResultsFound">
+                    <span>No SMEs found with the desired skills!<br></span>
+                </div>
+                <div  *ngIf="smeList && smeList.length > 0">
+                    <div class="smeRow row" *ngFor="let sme of smeList">
+                        <div class="col-sm-1 userIcon">
+                            <fa-icon icon="user-tie"></fa-icon>
+                        </div>
+                        <div class="col-sm-11 row">
+                            <div class="col-sm-12 col-md-5">
+                                <div class="smeName">{{sme.firstName}} {{sme.lastName}}</div>
+                                <a href="mailto:{{sme.email}}" class="smeEmail">{{sme.email}}</a>
+                            </div>
+                            <div class="col-sm-12 col-md-7">
+                                <span class="smeSkillValue" [ngClass]="{'searchSkill' : smeSkills.includes(skill)}" *ngFor="let skill of sme.expertInSkills;  let i=index">{{skill}}
+                                    <span *ngIf="i < sme.expertInSkills.length -1">, </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

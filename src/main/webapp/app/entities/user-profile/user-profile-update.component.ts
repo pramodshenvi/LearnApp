@@ -68,7 +68,7 @@ export class UserProfileUpdateComponent implements OnInit {
         this.skillDropDownKeyboardAction2 = 'reset';
       }
     }, 200);
-    const skillVal = this.editForm.get(['newInterestedSkills'])!.value;
+    const skillVal = (field === 'interested') ? this.editForm.get(['newInterestedSkills'])!.value : this.editForm.get(['newExpertSkills'])!.value;
     if (skillVal && skillVal !== '') {
       if (evt.key !== 'Enter' && evt.key !== 'ArrowUp' && evt.key !== 'ArrowDown') {
         this.skillsDropdownList1 = [];

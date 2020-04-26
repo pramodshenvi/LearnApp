@@ -56,6 +56,9 @@
                             <div *ngIf="!course.courseSMEs || course.courseSMEs.length === 0">
                                 No SMEs assigned for the course!
                             </div>
+                            <div class="searchSME" [routerLink]="['/sme-search']" [queryParams]="{ci: 'y'}">
+                                <fa-icon icon="search"></fa-icon>&nbsp;&nbsp;Search SME
+                            </div>
                         </dd>
                     </dl>
                 </div>

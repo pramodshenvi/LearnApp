@@ -21,6 +21,10 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./user-profile/user-profile.module').then(m => m.LearnAppUserProfileModule)
       },
       {
+        path: 'sme-search',
+        loadChildren: () => import('./sme-search/sme-search.module').then(m => m.LearnAppSMESearchModule)
+      },
+      {
         path: 'user-points',
         loadChildren: () => import('./user-points/user-points.module').then(m => m.LearnAppUserPointsModule)
       }

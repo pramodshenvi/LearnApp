@@ -43,4 +43,7 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     @Query("{ $or: [ { $and: [{'first_name' : {$regex: ?0, $options: 'i'}}, {'last_name' : {$regex: ?1, $options: 'i'}}] }, { $and: [{'first_name' : {$regex: ?1, $options: 'i'}}, {'last_name' : {$regex: ?0, $options: 'i'}}] } ]}")
     List<User> findMatchByFirstNameAndLastNameContaining(String name1, String name2);
+
+    @Query("{'expertInSkills' : {$in:?0 }}")
+    List<User> findUsersByExpertInSkillsContaining(List<String> skills);
 }

@@ -264,6 +264,15 @@ public class UserService {
         return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
     }
 
+    public List<UserDTO> findUsersByMatchingSMESkills(List<String> skills) {
+        log.debug("Request to get all users with matching SME Skills");
+        return userRepository.findUsersByExpertInSkillsContaining(skills)
+        .stream()
+        .map(UserDTO::new)
+        .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+
     public List<UserDTO> findMatchingUsersWithFirstOrLastNameContaining(String userName) {
         log.debug("Request to get all matching users");
         String[] userIdSplit = userName.split("\\s+");
