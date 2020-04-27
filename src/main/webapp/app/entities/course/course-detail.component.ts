@@ -49,7 +49,10 @@ export class CourseDetailComponent implements OnInit {
     modalRef.componentInstance.course = course;
     modalRef.result
       .then(result => {
-        if (result) this.course = result;
+        if (result) {
+          this.course = result;
+          this.messengerService.setCourseDetails(this.course);
+        }
       })
       .catch(() => {});
   }
@@ -59,7 +62,10 @@ export class CourseDetailComponent implements OnInit {
       this.course.courseSMEs = this.course.courseSMEs || [];
       this.course.courseSMEs.push(this.userName);
       this.courseService.update(this.course).subscribe(updatedCourse => {
-        if (updatedCourse && updatedCourse.body) this.course = updatedCourse.body;
+        if (updatedCourse && updatedCourse.body) {
+          this.course = updatedCourse.body;
+          this.messengerService.setCourseDetails(this.course);
+        }
       });
     }
   }
