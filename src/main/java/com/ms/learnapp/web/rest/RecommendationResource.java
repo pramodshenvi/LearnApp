@@ -53,11 +53,36 @@ public class RecommendationResource {
     {
         log.debug("REST request to get Recommendations for SMEs"); 
         currentUser = userservice.getCurrentUser();     
-        //log.debug("deepali "+currentUser.getInterestedInSkills()); 
         List<String> expertInSkills = currentUser.getExpertInSkills();
-          
+
+        List<CourseDTO> recommendationCourses = new ArrayList<CourseDTO>();
         Page<CourseDTO> page = courseService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+    
+        if(expertInSkills!=null && expertInSkills.size()>0)
+        {
+          List<CourseDTO> allCourses = page.getContent();
+          log.debug("all courses :" + allCourses.size());
+          for(CourseDTO courseDTO : allCourses)
+          {
+               List<String> courseSkills = courseDTO.getSmeSkills();
+                //if all smeSkills of a course match can the user host sessions for the course                                        
+                if(courseSkills.containsAll(expertInSkills))
+                {
+                    recommendationCourses.add(courseDTO);
+                }
+          }
+          if(recommendationCourses.size()>0)
+          {
+             Collections.sort(recommendationCourses,new Comparator<CourseDTO>(){
+                 public int compare(CourseDTO a,CourseDTO b)
+                 {
+                     return b.getSmePoints() - a.getSmePoints();
+                 }
+             });
+            return ResponseEntity.ok().headers(headers).body(recommendationCourses);
+          }
+        }
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 

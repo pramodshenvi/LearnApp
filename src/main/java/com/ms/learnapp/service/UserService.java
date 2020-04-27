@@ -202,7 +202,11 @@ public class UserService {
             });
     }
 
-
+   /**
+     * Return current user
+     *
+     * @return current user.
+     */
     public User getCurrentUser() {
          String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current user login not found"));
          return userRepository.findOneByLogin(userLogin).orElse(new User());
