@@ -30,6 +30,11 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserService {
+     private static class AccountResourceException extends RuntimeException {
+        private AccountResourceException(String message) {
+            super(message);
+        }
+    }
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
@@ -196,6 +201,18 @@ public class UserService {
                 log.debug("Changed Information for User: {}", user);
             });
     }
+
+   /**
+     * Return current user
+     *
+     * @return current user.
+     */
+    public User getCurrentUser() {
+         String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current user login not found"));
+         return userRepository.findOneByLogin(userLogin).orElse(new User());
+                
+    }
+
 
     /**
      * Update all information for a specific user, and return the modified user.

@@ -25,7 +25,7 @@ spring:
     include:
       - swagger
       # Uncomment to activate TLS for the dev profile
-      - tls
+      # tls
   devtools:
     restart:
       enabled: true
@@ -37,7 +37,9 @@ spring:
       indent-output: true
   data:
     mongodb:
-      uri: mongodb+srv://LearnAppUser:lau2020@learnapp-t8scd.mongodb.net/test?retryWrites=true&w=majority
+      uri:
+        mongodb+srv://deepali:learnapp123@cluster0-2orsx.mongodb.net/test?retryWrites=true&w=majority
+        # mongodb+srv://deepali:<password>@cluster0-2orsx.mongodb.net/test?retryWrites=true&w=majority
       database: LearnApp
   mail:
     host: smtp.gmail.com
